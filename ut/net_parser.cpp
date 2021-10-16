@@ -104,6 +104,7 @@ TEST_F(net_parser_tests, parse_good_line)
     EXPECT_STREQ(&view.val[0], "2");
 }
 
+
 class net_parser_file_tests : public ::testing::Test
 {
 public:
@@ -157,5 +158,97 @@ TEST_F(net_parser_file_tests, parse_simple_file)
     ref_views.emplace_back("l", "0", "5.3", "L1", component_type::L);
 
     compare_results(n_views);
+}
+
+class net_parser_node_tests : public ::testing::Test
+{
+public:
+    void compare_results(int32_t n_nodes)
+    {
+        for (int32_t i = 0; i < n_nodes; ++i)
+        {
+            EXPECT_EQ(nodes[i].comp_type, ref_nodes[i].comp_type);
+            EXPECT_STREQ(nodes[i].name, ref_nodes[i].name);
+            EXPECT_STREQ(nodes[i].val, ref_nodes[i].val);
+        }
+    }
+
+    std::vector<line_view> views;
+    std::vector<node> nodes;
+    std::vector<node> ref_nodes;
+};
+
+
+TEST_F(net_parser_node_tests, single_view)
+{
+    constexpr int32_t n_views = 1;
+    views.reserve(n_views);
+
+    views.emplace_back("vdd", "0", "1", "V1", component_type::V);
+    //views.emplace_back("r", "c", "10k", "R1", component_type::R);
+    //views.emplace_back("c", "l", "10n", "C1", component_type::C);
+    //views.emplace_back("l", "0", "5.3", "L1", component_type::L);
+
+    nodes = parse_views(views);
+
+    constexpr int32_t n_nodes = 1;
+
+    ref_nodes.reserve(n_nodes);
+
+    ref_nodes.emplace_back("1", "V1", component_type::V);
+
+    compare_results(n_nodes);
+}
+
+TEST_F(net_parser_node_tests, multiple_unique_views)
+{
+    constexpr int32_t n_views = 4;
+    views.reserve(n_views);
+
+    views.emplace_back("vdd", "0", "1", "V1", component_type::V);
+    views.emplace_back("r", "c", "10k", "R1", component_type::R);
+    views.emplace_back("c", "l", "10n", "C1", component_type::C);
+    views.emplace_back("l", "0", "5.3", "L1", component_type::L);
+
+    nodes = parse_views(views);
+
+    constexpr int32_t n_nodes = 4;
+
+    ref_nodes.reserve(n_nodes);
+
+    ref_nodes.emplace_back("1", "V1", component_type::V);
+    ref_nodes.emplace_back("10k", "R1", component_type::R);
+    ref_nodes.emplace_back("10n", "C1", component_type::C);
+    ref_nodes.emplace_back("5.3", "L1", component_type::L);
+
+    compare_results(n_nodes);
+}
+
+TEST_F(net_parser_node_tests, multiple_nonunique_views)
+{
+    constexpr int32_t n_views = 4;
+    views.reserve(n_views);
+
+    views.emplace_back("vdd", "0", "1", "V1", component_type::V);
+    views.emplace_back("vdd", "0", "1", "V1", component_type::V);
+    views.emplace_back("r", "c", "10k", "R1", component_type::R);
+    views.emplace_back("r", "c", "10M", "R1", component_type::R);
+    views.emplace_back("c", "l", "10n", "C1", component_type::C);
+    views.emplace_back("c", "a", "10n", "C1", component_type::C);
+    views.emplace_back("l", "0", "5.3", "L1", component_type::L);
+    views.emplace_back("k", "0", "5.3", "L1", component_type::L);
+
+    nodes = parse_views(views);
+
+    constexpr int32_t n_nodes = 4;
+
+    ref_nodes.reserve(n_nodes);
+
+    ref_nodes.emplace_back("1", "V1", component_type::V);
+    ref_nodes.emplace_back("10k", "R1", component_type::R);
+    ref_nodes.emplace_back("10n", "C1", component_type::C);
+    ref_nodes.emplace_back("5.3", "L1", component_type::L);
+
+    compare_results(n_nodes);
 }
 

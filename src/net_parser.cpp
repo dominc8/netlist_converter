@@ -120,3 +120,15 @@ std::vector<line_view> parse_file(FILE *file)
     return views;
 }
 
+std::vector<node> parse_views(std::vector<line_view> &views)
+{
+    std::vector<node> nodes;
+    nodes.reserve(views.size());
+
+    for (line_view &v : views)
+    {
+        node_extract(nodes, v);
+    }
+    return nodes;
+}
+
