@@ -15,17 +15,6 @@ constexpr char comp_type_map[n_component_type] =
 };
 }
 
-line_view::line_view() : p0{}, p1{}, val{}, name{} {}
-line_view::line_view(const char *in_p0, const char *in_p1, const char *in_val, const char *in_name, component_type in_type)
-    : line_view()
-{
-    strncpy(&p0[0], &in_p0[0], sizeof(p0) - 1);
-    strncpy(&p1[0], &in_p1[0], sizeof(p1) - 1);
-    strncpy(&val[0], &in_val[0], sizeof(val) - 1);
-    strncpy(&name[0], &in_name[0], sizeof(name) - 1);
-    comp_type = in_type;
-}
-
 bool parse_type(char *token, component_type *type)
 {
 
@@ -57,7 +46,7 @@ bool parse_str(char *token, char *str, int32_t str_len)
     return result;
 }
 
-bool parse_line(char *line, line_view *node)
+bool parse_line(char *line, line_view *view)
 {
     constexpr char delimiters[] = " \t\n";
     char *token = strtok(line, &delimiters[0]);
@@ -68,8 +57,8 @@ bool parse_line(char *line, line_view *node)
 
     bool result;
 
-    result = parse_str(token, &node->name[0], sizeof(node->name));
-    result = parse_type(token, &node->comp_type);
+    result = parse_str(token, &view->name[0], sizeof(view->name));
+    result = parse_type(token, &view->comp_type);
     token = strtok(nullptr, &delimiters[0]);
 
     if ((nullptr == token) || !result)
@@ -77,7 +66,7 @@ bool parse_line(char *line, line_view *node)
         return false;
     }
 
-    result = parse_str(token, &node->p0[0], sizeof(node->p0));
+    result = parse_str(token, &view->p0[0], sizeof(view->p0));
     token = strtok(nullptr, &delimiters[0]);
 
     if ((nullptr == token) || !result)
@@ -85,7 +74,7 @@ bool parse_line(char *line, line_view *node)
         return false;
     }
 
-    result = parse_str(token, &node->p1[0], sizeof(node->p1));
+    result = parse_str(token, &view->p1[0], sizeof(view->p1));
     token = strtok(nullptr, &delimiters[0]);
 
     if ((nullptr == token) || !result)
@@ -93,7 +82,7 @@ bool parse_line(char *line, line_view *node)
         return false;
     }
 
-    result = parse_str(token, &node->val[0], sizeof(node->val));
+    result = parse_str(token, &view->val[0], sizeof(view->val));
 
     return result;
 }
@@ -118,13 +107,13 @@ std::vector<line_view> parse_file(FILE *file)
         else
         {
             LOG_INFO("Calling parse_line");
-            line_view node;
-            bool result = parse_line(line, &node);
+            line_view view;
+            bool result = parse_line(line, &view);
 
             if (result)
             {
-                LOG_INFO("New node: %s, %s, %s, %s, %c", node.name, node.p0, node.p1, node.val, comp_type_map[static_cast<int32_t>(node.comp_type)]);
-                views.push_back(node);
+                LOG_INFO("New view: %s, %s, %s, %s, %c", view.name, view.p0, view.p1, view.val, comp_type_map[static_cast<int32_t>(view.comp_type)]);
+                views.push_back(view);
             }
         }
     }

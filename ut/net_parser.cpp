@@ -115,20 +115,20 @@ public:
         fclose(f);
     }
 
-    void compare_results(int32_t n_nodes)
+    void compare_results(int32_t n_views)
     {
-        for (int32_t i = 0; i < n_nodes; ++i)
+        for (int32_t i = 0; i < n_views; ++i)
         {
-            EXPECT_EQ(views[i].comp_type, ref[i].comp_type);
-            EXPECT_STREQ(views[i].name, ref[i].name);
-            EXPECT_STREQ(views[i].p0, ref[i].p0);
-            EXPECT_STREQ(views[i].p1, ref[i].p1);
-            EXPECT_STREQ(views[i].val, ref[i].val);
+            EXPECT_EQ(views[i].comp_type, ref_views[i].comp_type);
+            EXPECT_STREQ(views[i].name, ref_views[i].name);
+            EXPECT_STREQ(views[i].p0, ref_views[i].p0);
+            EXPECT_STREQ(views[i].p1, ref_views[i].p1);
+            EXPECT_STREQ(views[i].val, ref_views[i].val);
         }
     }
 
     std::vector<line_view> views;
-    std::vector<line_view> ref;
+    std::vector<line_view> ref_views;
 };
 
 
@@ -147,15 +147,15 @@ TEST_F(net_parser_file_tests, parse_simple_file)
 
     fclose(f);
 
-    constexpr int32_t n_nodes = 4;
+    constexpr int32_t n_views = 4;
 
-    ref.reserve(n_nodes);
+    ref_views.reserve(n_views);
 
-    ref.emplace_back("vdd", "0", "1", "V1", component_type::V);
-    ref.emplace_back("r", "c", "10k", "R1", component_type::R);
-    ref.emplace_back("c", "l", "10n", "C1", component_type::C);
-    ref.emplace_back("l", "0", "5.3", "L1", component_type::L);
+    ref_views.emplace_back("vdd", "0", "1", "V1", component_type::V);
+    ref_views.emplace_back("r", "c", "10k", "R1", component_type::R);
+    ref_views.emplace_back("c", "l", "10n", "C1", component_type::C);
+    ref_views.emplace_back("l", "0", "5.3", "L1", component_type::L);
 
-    compare_results(n_nodes);
+    compare_results(n_views);
 }
 

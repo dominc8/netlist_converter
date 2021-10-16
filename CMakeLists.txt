@@ -7,10 +7,10 @@ if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
     set(CMAKE_BUILD_TYPE "Release" CACHE STRING "Choose build type" FORCE)
 endif()
 
-project (net_asc_converter)
+project (netlist_converter)
 
 
-include_directories(${CMAKE_SOURCE_DIR}/src)
+include_directories(${CMAKE_SOURCE_DIR}/inc)
 
 add_subdirectory(src)
 
