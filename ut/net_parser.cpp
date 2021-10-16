@@ -212,13 +212,18 @@ TEST_F(net_parser_node_tests, multiple_unique_views)
 
     nodes = parse_views(views);
 
-    constexpr int32_t n_nodes = 4;
+    constexpr int32_t n_nodes = 9;
 
     ref_nodes.reserve(n_nodes);
 
     ref_nodes.emplace_back("1", "V1", component_type::V);
+    ref_nodes.emplace_back("1", "vdd", component_type::DotPoint);
+    ref_nodes.emplace_back("1", "0", component_type::DotPoint);
     ref_nodes.emplace_back("10k", "R1", component_type::R);
+    ref_nodes.emplace_back("10k", "r", component_type::DotPoint);
+    ref_nodes.emplace_back("10k", "c", component_type::DotPoint);
     ref_nodes.emplace_back("10n", "C1", component_type::C);
+    ref_nodes.emplace_back("10n", "l", component_type::DotPoint);
     ref_nodes.emplace_back("5.3", "L1", component_type::L);
 
     compare_results(n_nodes);
@@ -240,13 +245,18 @@ TEST_F(net_parser_node_tests, multiple_nonunique_views)
 
     nodes = parse_views(views);
 
-    constexpr int32_t n_nodes = 4;
+    constexpr int32_t n_nodes = 9;
 
     ref_nodes.reserve(n_nodes);
 
     ref_nodes.emplace_back("1", "V1", component_type::V);
+    ref_nodes.emplace_back("1", "vdd", component_type::DotPoint);
+    ref_nodes.emplace_back("1", "0", component_type::DotPoint);
     ref_nodes.emplace_back("10k", "R1", component_type::R);
+    ref_nodes.emplace_back("10k", "r", component_type::DotPoint);
+    ref_nodes.emplace_back("10k", "c", component_type::DotPoint);
     ref_nodes.emplace_back("10n", "C1", component_type::C);
+    ref_nodes.emplace_back("10n", "l", component_type::DotPoint);
     ref_nodes.emplace_back("5.3", "L1", component_type::L);
 
     compare_results(n_nodes);
