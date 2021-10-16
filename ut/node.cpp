@@ -22,31 +22,32 @@ public:
 
 TEST_F(node_tests, extract_node_from_line_view)
 {
-    constexpr int32_t n_nodes = 1;
+    constexpr int32_t n_nodes = 3;
     line_view view("p0", "p1", "val", "name", component_type::C);
 
-    bool ret_val = node_extract(nodes, view);
-    EXPECT_EQ(ret_val, true);
+    node_extract(nodes, view);
 
     ref_nodes.reserve(n_nodes);
     ref_nodes.emplace_back("val", "name", component_type::C);
+    ref_nodes.emplace_back("val", "p0", component_type::DotPoint);
+    ref_nodes.emplace_back("val", "p1", component_type::DotPoint);
 
     compare_results(n_nodes);
 }
 
 TEST_F(node_tests, ignore_node_with_duplicated_name)
 {
-    constexpr int32_t n_nodes = 1;
+    constexpr int32_t n_nodes = 3;
     line_view view("p0", "p1", "val", "name", component_type::C);
     line_view view_duplicate("x0", "x1", "val2", "name", component_type::L);
 
-    bool ret_val = node_extract(nodes, view);
-    EXPECT_EQ(ret_val, true);
-    ret_val = node_extract(nodes, view_duplicate);
-    EXPECT_EQ(ret_val, false);
+    node_extract(nodes, view);
+    node_extract(nodes, view_duplicate);
 
     ref_nodes.reserve(n_nodes);
     ref_nodes.emplace_back("val", "name", component_type::C);
+    ref_nodes.emplace_back("val", "p0", component_type::DotPoint);
+    ref_nodes.emplace_back("val", "p1", component_type::DotPoint);
 
     compare_results(n_nodes);
 }

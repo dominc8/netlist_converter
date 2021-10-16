@@ -15,7 +15,7 @@ struct node
     component_type comp_type;
 };
 
-bool node_extract(std::vector<node> &nodes, line_view &view);
+void node_extract(std::vector<node> &nodes, line_view &view);
 
 #endif /* NODE_HPP */
 
