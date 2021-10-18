@@ -15,7 +15,8 @@ struct node
     component_type comp_type;
 };
 
-void node_extract(std::vector<node> &nodes, line_view &view);
+void node_extract(std::vector<node> &nodes, const line_view &view);
+int32_t node_find_idx_by_name(const std::vector<node> &nodes, const char *name);
 
 #endif /* NODE_HPP */
 
