@@ -10,6 +10,8 @@ struct node
     node();
     node(const char *in_val, const char *in_name, component_type in_type);
 
+    int32_t x;
+    int32_t y;
     char val[8];
     char name[7];
     component_type comp_type;
