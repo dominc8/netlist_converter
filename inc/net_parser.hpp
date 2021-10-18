@@ -14,7 +14,7 @@ bool parse_line(char *line, line_view *node);
 
 std::vector<line_view> parse_file(FILE *file);
 std::vector<node> parse_views(const std::vector<line_view> &views);
-graph parse_nodes(const std::vector<node> &nodes, const std::vector<line_view> *views);
+graph parse_nodes(const std::vector<node> &nodes, const std::vector<line_view> &views);
 
 #endif /* NET_PARSER_HPP */
 
