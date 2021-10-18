@@ -8,18 +8,17 @@
 #include <ogdf/planarity/VariableEmbeddingInserter.h>
 #include <ogdf/basic/Array.h>
 
-using namespace ogdf;
 
 int main()
 {
-    Graph G;
-    GraphAttributes GA(G,
-      GraphAttributes::nodeGraphics | GraphAttributes::nodeType |
-      GraphAttributes::edgeGraphics | GraphAttributes::edgeType);
+    ogdf::Graph G;
+    ogdf::GraphAttributes GA(G,
+        ogdf::GraphAttributes::nodeGraphics | ogdf::GraphAttributes::nodeType |
+        ogdf::GraphAttributes::edgeGraphics | ogdf::GraphAttributes::edgeType);
 
     if (0)
     {
-        randomSimpleGraph(G, 10, 20);
+        ogdf::randomSimpleGraph(G, 10, 20);
     }
     else
     {
@@ -35,7 +34,7 @@ int main()
          * |   |   |
          *  ---1---
          * */
-        Array<node> v(n_node);
+        ogdf::Array<ogdf::node> v(n_node);
 
         for (int32_t i = 0; i < n_node; ++i)
         {
@@ -50,44 +49,40 @@ int main()
         G.newEdge(v[2], v[5]);
         G.newEdge(v[2], v[6]);
     }
-    //if (!GraphIO::read(GA, G, "ERDiagram.gml", GraphIO::readGML)) {
-    //    std::cerr << "Could not read ERDiagram.gml" << std::endl;
-    //    return 1;
-    //}
 
-    for (node v : G.nodes)
+    for (auto v : G.nodes)
     {
         GA.width(v) /= 2;
         GA.height(v) /= 2;
     }
 
-    PlanarizationLayout pl;
+    ogdf::PlanarizationLayout pl;
 
-    SubgraphPlanarizer crossMin;
+    ogdf::SubgraphPlanarizer crossMin;
 
-    auto* ps = new PlanarSubgraphFast<int>;
+    auto* ps = new ogdf::PlanarSubgraphFast<int>;
     ps->runs(1000);
-    VariableEmbeddingInserter *ves = new VariableEmbeddingInserter;
-    ves->removeReinsert(RemoveReinsertType::All);
+    ogdf::VariableEmbeddingInserter *ves = new ogdf::VariableEmbeddingInserter;
+    ves->removeReinsert(ogdf::RemoveReinsertType::All);
 
     crossMin.setSubgraph(ps);
     crossMin.setInserter(ves);
 
-    EmbedderMinDepthMaxFaceLayers *emb = new EmbedderMinDepthMaxFaceLayers;
+    ogdf::EmbedderMinDepthMaxFaceLayers *emb = new ogdf::EmbedderMinDepthMaxFaceLayers;
     pl.setEmbedder(emb);
 
-    OrthoLayout *ol = new OrthoLayout;
+    ogdf::OrthoLayout *ol = new ogdf::OrthoLayout;
     ol->separation(20.0);
     ol->cOverhang(0.4);
     pl.setPlanarLayouter(ol);
 
     pl.call(GA);
 
-    Array<NodeElement*> arr;
+    ogdf::Array<ogdf::NodeElement*> arr;
 
     G.allNodes(arr);
 
-    int i = 0;
+    int32_t i = 0;
     for (auto &n : arr)
     {
         double x = GA.x(n);
@@ -97,8 +92,8 @@ int main()
         ++i;
     }
 
-    GraphIO::write(GA, "output-ERDiagram.gml", GraphIO::writeGML);
-    GraphIO::write(GA, "output-ERDiagram.svg", GraphIO::drawSVG);
+    ogdf::GraphIO::write(GA, "output-ERDiagram.gml", ogdf::GraphIO::writeGML);
+    ogdf::GraphIO::write(GA, "output-ERDiagram.svg", ogdf::GraphIO::drawSVG);
 
     return 0;
 }
