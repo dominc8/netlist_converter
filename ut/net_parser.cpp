@@ -136,7 +136,7 @@ public:
 TEST_F(net_parser_file_tests, parse_simple_file)
 {
     constexpr char filename[] = "simple_file.txt";
-    create_test_file(filename, "  V1 vdd 0 1\n\n\n"
+    create_test_file(filename, "  V1 r 0 1\n\n\n"
                                " R1    r c 10k\n"
                                "C1  c l    10n\n"
                                "L1 l 0 5.3   \n\n");
@@ -152,7 +152,7 @@ TEST_F(net_parser_file_tests, parse_simple_file)
 
     ref_views.reserve(n_views);
 
-    ref_views.emplace_back("vdd", "0", "1", "V1", component_type::V);
+    ref_views.emplace_back("r", "0", "1", "V1", component_type::V);
     ref_views.emplace_back("r", "c", "10k", "R1", component_type::R);
     ref_views.emplace_back("c", "l", "10n", "C1", component_type::C);
     ref_views.emplace_back("l", "0", "5.3", "L1", component_type::L);
@@ -185,9 +185,6 @@ TEST_F(net_parser_node_tests, single_view)
     views.reserve(n_views);
 
     views.emplace_back("vdd", "0", "1", "V1", component_type::V);
-    //views.emplace_back("r", "c", "10k", "R1", component_type::R);
-    //views.emplace_back("c", "l", "10n", "C1", component_type::C);
-    //views.emplace_back("l", "0", "5.3", "L1", component_type::L);
 
     nodes = parse_views(views);
 
