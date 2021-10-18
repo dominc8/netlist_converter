@@ -9,6 +9,7 @@ struct node
 {
     node();
     node(const char *in_val, const char *in_name, component_type in_type);
+    inline void set_coord(int32_t in_x, int32_t in_y) { x = in_x; y = in_y; }
 
     int32_t x;
     int32_t y;

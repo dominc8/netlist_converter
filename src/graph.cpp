@@ -14,3 +14,7 @@ uint8_t& graph::edge_of(int32_t p0, int32_t p1)
     return matrix[p0 * n_node + p1];
 }
 
+uint8_t graph::edge_of(int32_t p0, int32_t p1) const
+{
+    return matrix[p0 * n_node + p1];
+}

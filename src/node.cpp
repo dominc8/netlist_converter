@@ -27,7 +27,7 @@ void node_extract(std::vector<node> &nodes, const line_view &view)
         }
         if (0 == strncmp(view.p0, n.name, sizeof(n.name)))
         {
-            LOG_INFO("Node p0 with the name %s already exists, val=%s, type=%d", n.name,
+            LOG_WARN("Node p0 with the name %s already exists, val=%s, type=%d", n.name,
                     n.val, static_cast<int32_t>(n.comp_type));
             add_p0 = false;
         }

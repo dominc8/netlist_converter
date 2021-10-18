@@ -27,7 +27,11 @@ target_compile_definitions(${PROJECT_NAME} PRIVATE
     $<$<CONFIG:Debug>:DEBUG>
 )
 
-add_executable(app ${CMAKE_SOURCE_DIR}/src/app.cpp)
+add_executable(app ${CMAKE_SOURCE_DIR}/src/app.cpp ${CMAKE_SOURCE_DIR}/src/layoutizer.cpp)
+target_compile_definitions(app PRIVATE
+    $<$<CONFIG:Debug>:DEBUG>
+)
+
 target_link_libraries(app ${PROJECT_NAME} OGDF)
 
 #############################################
