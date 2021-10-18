@@ -262,3 +262,57 @@ TEST_F(net_parser_node_tests, multiple_nonunique_views)
     compare_results(n_nodes);
 }
 
+class net_parser_graph_tests : public ::testing::Test
+{
+public:
+    void compare_results()
+    {
+        ASSERT_EQ(g.n_node, ref_g.n_node);
+
+        int32_t mat_size = g.n_node * g.n_node;
+        auto cmp = memcmp(g.matrix, ref_g.matrix, mat_size * sizeof(*g.matrix));
+        EXPECT_EQ(cmp, 0);
+    }
+
+    graph g;
+    graph ref_g;
+    std::vector<line_view> views;
+    std::vector<node> nodes;
+};
+
+
+TEST_F(net_parser_graph_tests, proper_graph)
+{
+    constexpr int32_t n_views = 4;
+    views.reserve(n_views);
+
+    views.emplace_back("r", "0", "1", "V1", component_type::V);
+    views.emplace_back("vdd", "0", "1", "V1", component_type::V);
+    views.emplace_back("r", "c", "10k", "R1", component_type::R);
+    views.emplace_back("r", "c", "10M", "R1", component_type::R);
+    views.emplace_back("c", "l", "10n", "C1", component_type::C);
+    views.emplace_back("c", "a", "10n", "C1", component_type::C);
+    views.emplace_back("l", "0", "5.3", "L1", component_type::L);
+    views.emplace_back("k", "0", "5.3", "L1", component_type::L);
+
+    nodes = parse_views(views);
+
+    g = parse_nodes(nodes, views);
+
+    constexpr int32_t n_nodes = 8;
+    uint8_t ref_matrix[n_nodes][n_nodes] =
+    {
+        { 0, 1, 1, 0, 0, 0, 0, 0 }, //V1
+        { 1, 0, 0, 1, 0, 0, 0, 0 }, //r
+        { 1, 0, 0, 0, 0, 0, 0, 1 }, //0
+        { 0, 1, 0, 0, 1, 0, 0, 0 }, //R1
+        { 0, 0, 0, 1, 0, 1, 0, 0 }, //c
+        { 0, 0, 0, 0, 1, 0, 1, 0 }, //C1
+        { 0, 0, 0, 0, 0, 1, 0, 1 }, //l
+        { 0, 0, 1, 0, 0, 0, 1, 0 }, //L1
+    };
+    ref_g.n_node = n_nodes;
+    ref_g.matrix = &ref_matrix[0][0];
+    compare_results();
+}
+

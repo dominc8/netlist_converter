@@ -3,6 +3,7 @@
 #include <string.h>
 #include <ctype.h>
 #include <stdlib.h>
+#include <tuple>
 
 namespace
 {
@@ -120,15 +121,64 @@ std::vector<line_view> parse_file(FILE *file)
     return views;
 }
 
-std::vector<node> parse_views(std::vector<line_view> &views)
+std::vector<node> parse_views(const std::vector<line_view> &views)
 {
     std::vector<node> nodes;
     nodes.reserve(views.size());
 
-    for (line_view &v : views)
+    for (auto &v : views)
     {
         node_extract(nodes, v);
     }
     return nodes;
+}
+
+graph parse_nodes(const std::vector<node> &nodes, const std::vector<line_view> &views)
+{
+    graph g;
+    int32_t n_node = nodes.size();
+
+    g.init(n_node);
+    if (g.n_node != n_node)
+    {
+        LOG_ERROR("Graph creation failed");
+        return g;
+    }
+    else if (0 == n_node)
+    {
+        LOG_ERROR("Graph is empty (no nodes)");
+        return g;
+    }
+
+    for (auto &v : views)
+    {
+        int32_t elem_idx = node_find_idx_by_name(nodes, v.name);
+        if (elem_idx < 0)
+        {
+            LOG_WARN("Node %s from view cannot be found in nodes", v.name);
+            continue;
+        }
+
+        int32_t p0_idx = node_find_idx_by_name(nodes, v.p0);
+        if (p0_idx < 0)
+        {
+            LOG_WARN("Node %s from view cannot be found in nodes", v.p0);
+            continue;
+        }
+
+        int32_t p1_idx = node_find_idx_by_name(nodes, v.p1);
+        if (p1_idx < 0)
+        {
+            LOG_WARN("Node %s from view cannot be found in nodes", v.p1);
+            continue;
+        }
+
+        g.edge_of(elem_idx, p0_idx) = 1;
+        g.edge_of(elem_idx, p1_idx) = 1;
+        g.edge_of(p0_idx, elem_idx) = 1;
+        g.edge_of(p1_idx, elem_idx) = 1;
+    }
+
+    return g;
 }
 

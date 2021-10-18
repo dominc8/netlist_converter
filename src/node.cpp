@@ -12,7 +12,7 @@ node::node(const char *in_val, const char *in_name, component_type in_type)
     comp_type = in_type;
 }
 
-void node_extract(std::vector<node> &nodes, line_view &view)
+void node_extract(std::vector<node> &nodes, const line_view &view)
 {
     bool add_name = true;
     bool add_p0 = true;
@@ -51,5 +51,20 @@ void node_extract(std::vector<node> &nodes, line_view &view)
             nodes.emplace_back(view.val, view.p1, component_type::DotPoint);
         }
     }
+}
+
+int32_t node_find_idx_by_name(const std::vector<node> &nodes, const char *name)
+{
+    int32_t idx = -1;
+    for (int32_t i = 0; i < nodes.size(); ++i)
+    {
+        if (0 == strncmp(nodes[i].name, name, sizeof(nodes[i].name)))
+        {
+            idx = i;
+            break;
+        }
+    }
+
+    return idx;
 }
 
