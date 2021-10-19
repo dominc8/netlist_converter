@@ -25,6 +25,8 @@ SYMATTR Value <node.value>
 GND:
 FLAG <node.x> <node.y> 0
 
+comp_type_name: voltage, res, ind, cap
+
 
 wires:
 components by default might have 32 points of width, their coords are not in
