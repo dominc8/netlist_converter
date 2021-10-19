@@ -1,0 +1,37 @@
+HEADER:
+Version 4
+SHEET 1 880 680 // numbers seem to does not matter
+
+
+XY coordinates as in image processing:
+    X goes left to right
+    Y goes up to down
+
+
+V, R, L, C:
+
+SYMBOL <comp_type_name> <node.x> <node.y> R<angle:0, 90, 180, 270>
+SYMATTR InstName <node.name>
+SYMATTR Value <node.value>
+
+V advanced:
+SYMBOL <comp_type_name> <node.x> <node.y> R0
+WINDOW 123 24 124 Left 2                        // These 3 additional lines
+WINDOW 39 0 0 Left 0                            // seem to add fake node
+SYMATTR Value2 AC 1                             // to attach 'AC 1' txt
+SYMATTR InstName <node.name>
+SYMATTR Value <node.value>
+
+GND:
+FLAG <node.x> <node.y> 0
+
+
+wires:
+components by default might have 32 points of width, their coords are not in
+the center, but in top left corner so points are often offset by 32/2
+
+voltage node is offset by 16 even though it shouldn't, voltage coords
+are 16 points above top center ?!?!
+
+idky but for voltage node: top+ is at ycord+16, bottom- is at ycord+96
+        ! for R0, for other rotations it may be different but idc for now
