@@ -95,12 +95,12 @@ int32_t node_uncornerize(node &comp_node, const node &neighbour1, const node &ne
     if (offset_x > offset_y)
     {
         offset_y = 0;
-        rotation = 0;
+        rotation = 90;
     }
     else
     {
         offset_x = 0;
-        rotation = 90;
+        rotation = 0;
     }
 
     LOG_INFO("Moving node %s from (%d, %d) by offset (%d, %d)", comp_node.name, comp_node.x, comp_node.y, offset_x, offset_y);
