@@ -265,8 +265,9 @@ public:
     void compare_results()
     {
         ASSERT_EQ(g.n_node, ref_g.n_node);
+        ASSERT_EQ(g.n_all_node, ref_g.n_all_node);
 
-        int32_t mat_size = g.n_node * g.n_node;
+        int32_t mat_size = g.n_all_node * g.n_all_node;
         auto cmp = memcmp(g.matrix, ref_g.matrix, mat_size * sizeof(*g.matrix));
         EXPECT_EQ(cmp, 0);
     }
@@ -297,7 +298,9 @@ TEST_F(net_parser_graph_tests, proper_graph)
     g = parse_nodes(nodes, views);
 
     constexpr int32_t n_nodes = 8;
-    uint8_t ref_matrix[n_nodes][n_nodes] =
+    constexpr int32_t n_component_node = 4;
+    constexpr int32_t n_all_node = n_nodes + n_component_node;
+    uint8_t ref_matrix[n_all_node][n_all_node] =
     {
         { 0, 1, 1, 0, 0, 0, 0, 0 }, //V1
         { 1, 0, 0, 1, 0, 0, 0, 0 }, //r
@@ -309,6 +312,7 @@ TEST_F(net_parser_graph_tests, proper_graph)
         { 0, 0, 1, 0, 0, 0, 1, 0 }, //L1
     };
     ref_g.n_node = n_nodes;
+    ref_g.n_all_node = n_all_node;
     ref_g.matrix = &ref_matrix[0][0];
     compare_results();
 }
