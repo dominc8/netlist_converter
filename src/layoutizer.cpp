@@ -61,38 +61,27 @@ bool node_is_in_corner(const node &middle_node, const node &neighbour1, const no
 
 int32_t node_uncornerize(node &comp_node, const node &neighbour1, const node &neighbour2)
 {
-    int32_t offset_x {0}, offset_y {0}, rotation;
+    int32_t offset_x, offset_y, rotation;
     int32_t lost_neighbour_idx {0};
 
-    if (std::abs(comp_node.x - neighbour1.x) > std::abs(comp_node.y - neighbour1.y))
+    offset_x = (neighbour1.x - comp_node.x) / 2;
+    offset_y = (neighbour1.y - comp_node.y) / 2;
+
+    int32_t n2_offset = (neighbour2.x - comp_node.x) / 2;
+    if (std::abs(n2_offset) > std::abs(offset_x))
     {
-        offset_x = (neighbour1.x - comp_node.x) / 2;
-    }
-    else
-    {
-        offset_y = (neighbour1.y - comp_node.y) / 2;
+        offset_x = n2_offset;
+        lost_neighbour_idx = 1;
     }
 
-    if (std::abs(comp_node.x - neighbour2.x) > std::abs(comp_node.y - neighbour2.y))
+    n2_offset = (neighbour2.y - comp_node.y) / 2;
+    if (std::abs(n2_offset) > std::abs(offset_y))
     {
-        int32_t n2_offset = (neighbour2.x - comp_node.x) / 2;
-        if (std::abs(offset_x) < std::abs(n2_offset))
-        {
-            offset_x = n2_offset;
-            lost_neighbour_idx = 1;
-        }
-    }
-    else
-    {
-        int32_t n2_offset = (neighbour2.y - comp_node.y) / 2;
-        if (std::abs(offset_y) < std::abs(n2_offset))
-        {
-            offset_y = n2_offset;
-            lost_neighbour_idx = 1;
-        }
+        offset_y = n2_offset;
+        lost_neighbour_idx = 1;
     }
 
-    if (offset_x > offset_y)
+    if (std::abs(offset_x) > std::abs(offset_y))
     {
         offset_y = 0;
         rotation = 90;
@@ -195,7 +184,7 @@ void layout(graph &g, std::vector<node> &nodes, const char *filename)
                 g.edge_of(g.n_node, i) = 1;
                 g.edge_of(g.n_node, neighbours[lost_neighbour_idx]) = 1;
                 g.edge_of(neighbours[lost_neighbour_idx], g.n_node) = 1;
-                LOG_INFO("Added node: %s at %d, %d", nodes[g.n_node].name, nodes[g.n_node].x, nodes[g.n_node].y);
+                LOG_INFO("Added helper node at %d, %d", nodes[g.n_node].name, nodes[g.n_node].x, nodes[g.n_node].y);
                 g.n_node++;
             }
             else
