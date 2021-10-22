@@ -61,8 +61,8 @@ bool node_is_in_corner(const node &middle_node, const node &neighbour1, const no
 
 int32_t node_uncornerize(node &comp_node, const node &neighbour1, const node &neighbour2)
 {
-    int32_t offset_x, offset_y, rotation;
-    int32_t lost_neighbour_idx = 0;
+    int32_t offset_x {0}, offset_y {0}, rotation;
+    int32_t lost_neighbour_idx {0};
 
     if (std::abs(comp_node.x - neighbour1.x) > std::abs(comp_node.y - neighbour1.y))
     {
@@ -102,6 +102,8 @@ int32_t node_uncornerize(node &comp_node, const node &neighbour1, const node &ne
         offset_x = 0;
         rotation = 90;
     }
+
+    LOG_INFO("Moving node %s from (%d, %d) by offset (%d, %d)", comp_node.name, comp_node.x, comp_node.y, offset_x, offset_y);
 
     comp_node.x += offset_x;
     comp_node.y += offset_y;
@@ -193,6 +195,7 @@ void layout(graph &g, std::vector<node> &nodes, const char *filename)
                 g.edge_of(g.n_node, i) = 1;
                 g.edge_of(g.n_node, neighbours[lost_neighbour_idx]) = 1;
                 g.edge_of(neighbours[lost_neighbour_idx], g.n_node) = 1;
+                LOG_INFO("Added node: %s at %d, %d", nodes[g.n_node].name, nodes[g.n_node].x, nodes[g.n_node].y);
                 g.n_node++;
             }
             else
