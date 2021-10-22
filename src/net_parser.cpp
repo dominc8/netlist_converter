@@ -138,15 +138,26 @@ graph parse_nodes(const std::vector<node> &nodes, const std::vector<line_view> &
     graph g;
     int32_t n_node = nodes.size();
 
-    g.init(n_node);
+    if (0 == n_node)
+    {
+        LOG_ERROR("There are no nodes");
+        return g;
+    }
+
+    int32_t n_component_node = 0;
+    for (const auto &n : nodes)
+    {
+        if (static_cast<int32_t>(n.comp_type) < n_component_type)
+        {
+            ++n_component_node;
+        }
+    }
+    LOG_INFO("Found %d component nodes in %d nodes", n_component_node, n_node);
+
+    g.init(n_node, n_component_node);
     if (g.n_node != n_node)
     {
         LOG_ERROR("Graph creation failed");
-        return g;
-    }
-    else if (0 == n_node)
-    {
-        LOG_ERROR("Graph is empty (no nodes)");
         return g;
     }
 

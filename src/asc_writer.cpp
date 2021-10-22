@@ -18,12 +18,12 @@ void write_header(FILE *f)
                "SHEET 1 680 480\n");
 }
 
-void write_node_symbol(FILE *f, const node &n, int32_t rotation)
+void write_node_symbol(FILE *f, const node &n)
 {
     fprintf(f, "SYMBOL %s %d %d R%d\n"
                "SYMATTR InstName %s\n"
                "SYMATTR Value %s\n",
-               symbol_map[static_cast<int32_t>(n.comp_type)], n.x, n.y, rotation,
+               symbol_map[static_cast<int32_t>(n.comp_type)], n.x, n.y, n.rotation,
                n.name, n.val);
 }
 
@@ -36,9 +36,7 @@ void write_layout(FILE *f, const graph &g, const std::vector<node> &nodes)
         {
             continue;
         }
-        int32_t rotation = 0;
-        // get_rotation
-        write_node_symbol(f, n, rotation);
+        write_node_symbol(f, n);
     }
 }
 
