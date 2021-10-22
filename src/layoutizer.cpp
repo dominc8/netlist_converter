@@ -1,4 +1,5 @@
 #include "layoutizer.hpp"
+#include "logger.hpp"
 #include <ogdf/basic/graph_generators.h>
 #include <ogdf/basic/Array.h>
 #include <ogdf/orthogonal/OrthoLayout.h>
@@ -174,7 +175,7 @@ void layout(graph &g, std::vector<node> &nodes, const char *filename)
         if (static_cast<int32_t>(nodes[i].comp_type) < n_component_type)
         {
             int32_t neighbours[2];
-            get_neighbours(g, i, neighbours);
+            get_neighbours(g, i, &neighbours[0]);
 
             auto &comp_node = nodes[i];
             auto &neighbour1 = nodes[neighbours[0]];
