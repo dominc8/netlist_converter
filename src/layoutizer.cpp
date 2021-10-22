@@ -25,9 +25,92 @@ void create_edges(ogdf::Graph &G, ogdf::Array<ogdf::node> &v, const graph &g)
         }
     }
 }
+
+void get_neighbours(const graph &g, int32_t node_idx, int32_t *neighbours)
+{
+    int32_t tmp_neighbours[3];
+    int32_t neighbour_cnt = 0;
+    auto *edges = &g.matrix[node_idx * g.n_all_node];
+
+    for (int32_t i = 0; i < g.n_node; ++i)
+    {
+        tmp_neighbours[neighbour_cnt] = i;
+        if (edges[i])
+        {
+            ++neighbour_cnt;
+        }
+    }
+
+    neighbours[0] = tmp_neighbours[0];
+    neighbours[1] = tmp_neighbours[1];
 }
 
-void layout(const graph &g, std::vector<node> &nodes, const char *filename)
+bool node_is_in_corner(const node &middle_node, const node &neighbour1, const node &neighbour2)
+{
+    bool is_in_corner = false;
+
+    if (((middle_node.x == neighbour1.x) && (middle_node.y == neighbour2.y)) ||
+        ((middle_node.x == neighbour2.x) && (middle_node.y == neighbour1.y)))
+    {
+        is_in_corner = true;
+    }
+
+    return is_in_corner;
+}
+
+int32_t node_uncornerize(node &comp_node, const node &neighbour1, const node &neighbour2)
+{
+    int32_t offset_x, offset_y, rotation;
+    int32_t lost_neighbour_idx = 0;
+
+    if (std::abs(comp_node.x - neighbour1.x) > std::abs(comp_node.y - neighbour1.y))
+    {
+        offset_x = (neighbour1.x - comp_node.x) / 2;
+    }
+    else
+    {
+        offset_y = (neighbour1.y - comp_node.y) / 2;
+    }
+
+    if (std::abs(comp_node.x - neighbour2.x) > std::abs(comp_node.y - neighbour2.y))
+    {
+        int32_t n2_offset = (neighbour2.x - comp_node.x) / 2;
+        if (std::abs(offset_x) < std::abs(n2_offset))
+        {
+            offset_x = n2_offset;
+            lost_neighbour_idx = 1;
+        }
+    }
+    else
+    {
+        int32_t n2_offset = (neighbour2.y - comp_node.y) / 2;
+        if (std::abs(offset_y) < std::abs(n2_offset))
+        {
+            offset_y = n2_offset;
+            lost_neighbour_idx = 1;
+        }
+    }
+
+    if (offset_x > offset_y)
+    {
+        offset_y = 0;
+        rotation = 0;
+    }
+    else
+    {
+        offset_x = 0;
+        rotation = 90;
+    }
+
+    comp_node.x += offset_x;
+    comp_node.y += offset_y;
+    comp_node.rotation = rotation;
+
+    return lost_neighbour_idx;
+}
+}
+
+void layout(graph &g, std::vector<node> &nodes, const char *filename)
 {
     int32_t n_node = nodes.size();
     ogdf::Graph G;
@@ -84,6 +167,43 @@ void layout(const graph &g, std::vector<node> &nodes, const char *filename)
         }
         max_x = (max_x < nodes[i].x) ? nodes[i].x : max_x;
         max_y = (max_y < nodes[i].y) ? nodes[i].y : max_y;
+    }
+
+    for (int32_t i = 0; i < n_node; ++i)
+    {
+        if (static_cast<int32_t>(nodes[i].comp_type) < n_component_type)
+        {
+            int32_t neighbours[2];
+            get_neighbours(g, i, neighbours);
+
+            auto &comp_node = nodes[i];
+            auto &neighbour1 = nodes[neighbours[0]];
+            auto &neighbour2 = nodes[neighbours[1]];
+            if (node_is_in_corner(comp_node, neighbour1, neighbour2))
+            {
+                node new_tmp_node("", "", component_type::DotPoint);
+                new_tmp_node.set_coord(comp_node.x, comp_node.y);
+                int32_t lost_neighbour_idx = node_uncornerize(comp_node, neighbour1, neighbour2);
+
+                nodes.push_back(new_tmp_node);
+                g.edge_of(i, neighbours[lost_neighbour_idx]) = 0;
+                g.edge_of(neighbours[lost_neighbour_idx], i) = 0;
+                g.edge_of(i, g.n_node) = 1;
+                g.edge_of(g.n_node, i) = 1;
+                g.edge_of(g.n_node, neighbours[lost_neighbour_idx]) = 1;
+                g.edge_of(neighbours[lost_neighbour_idx], g.n_node) = 1;
+                g.n_node++;
+            }
+            else
+            {
+                int32_t rotation = 0;
+                if ((comp_node.y == neighbour1.y) && (comp_node.y == neighbour1.y))
+                {
+                    rotation = 90;
+                }
+                comp_node.rotation = rotation;
+            }
+        }
     }
 
     for (int32_t i = 0; i < n_node; ++i)
