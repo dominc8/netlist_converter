@@ -21,7 +21,7 @@ int main(int argc, char **argv)
     fclose(f);
     auto nodes = parse_views(views);
     auto g = parse_nodes(nodes, views);
-    layout(g, nodes, input_filename);
+    layout(g, nodes, views, input_filename);
 
     LOG_INFO("Layout:");
     for (const auto &n : nodes)

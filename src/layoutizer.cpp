@@ -102,7 +102,7 @@ int32_t node_uncornerize(node &comp_node, const node &neighbour1, const node &ne
 }
 }
 
-void layout(graph &g, std::vector<node> &nodes, const char *filename)
+void layout(graph &g, std::vector<node> &nodes, const std::vector<line_view> &views, const char *filename)
 {
     int32_t n_node = nodes.size();
     ogdf::Graph G;
@@ -195,6 +195,24 @@ void layout(graph &g, std::vector<node> &nodes, const char *filename)
                     rotation = 90;
                 }
                 comp_node.rotation = rotation;
+            }
+        }
+    }
+
+    // voltage rotation
+    for (int32_t i = 0; i < views.size(); ++i)
+    {
+        if (component_type::V == views[i].comp_type)
+        {
+            int32_t v_idx = node_find_idx_by_name(nodes, &views[i].name[0]);
+            int32_t plus_idx = node_find_idx_by_name(nodes, &views[i].p0[0]);
+            node &v_node = nodes[v_idx];
+            const node &plus_node = nodes[plus_idx];
+
+            if (((v_node.rotation == 0) && (plus_node.y > v_node.y)) ||
+                ((v_node.rotation == 90) && (plus_node.x < v_node.x)))
+            {
+                v_node.rotation += 180;
             }
         }
     }
