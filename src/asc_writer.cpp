@@ -27,16 +27,24 @@ void write_node_symbol(FILE *f, const node &n)
                n.name, n.val);
 }
 
+void write_gnd_node(FILE *f, const node &n)
+{
+    fprintf(f, "FLAG %d %d 0\n", n.x, n.y);
+}
+
 void write_layout(FILE *f, const graph &g, const std::vector<node> &nodes)
 {
     write_header(f);
     for (const auto &n : nodes)
     {
-        if (static_cast<int32_t>(n.comp_type) >= n_component_type)
+        if (static_cast<int32_t>(n.comp_type) < n_component_type)
         {
-            continue;
+            write_node_symbol(f, n);
         }
-        write_node_symbol(f, n);
+        else if (n.comp_type == component_type::Ground)
+        {
+            write_gnd_node(f, n);
+        }
     }
 }
 
