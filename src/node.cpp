@@ -12,11 +12,21 @@ node::node(const char *in_val, const char *in_name, component_type in_type)
     comp_type = in_type;
 }
 
+namespace
+{
+bool node_is_gnd(const char *name)
+{
+    char gnd_name[] = "0";
+    return (0 == strncmp(name, gnd_name, sizeof(gnd_name)));
+}
+}
+
 void node_extract(std::vector<node> &nodes, const line_view &view)
 {
     bool add_name = true;
     bool add_p0 = true;
     bool add_p1 = true;
+
     for (node &n : nodes)
     {
         if (0 == strncmp(view.name, n.name, sizeof(n.name)))
@@ -44,11 +54,13 @@ void node_extract(std::vector<node> &nodes, const line_view &view)
         nodes.emplace_back(view.val, view.name, view.comp_type);
         if (add_p0)
         {
-            nodes.emplace_back(view.val, view.p0, component_type::DotPoint);
+            component_type comp_type = node_is_gnd(view.p0) ? component_type::Ground : component_type::DotPoint;
+            nodes.emplace_back(view.val, view.p0, comp_type);
         }
         if (add_p1)
         {
-            nodes.emplace_back(view.val, view.p1, component_type::DotPoint);
+            component_type comp_type = node_is_gnd(view.p1) ? component_type::Ground : component_type::DotPoint;
+            nodes.emplace_back(view.val, view.p1, comp_type);
         }
     }
 }

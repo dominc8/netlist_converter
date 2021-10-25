@@ -11,6 +11,7 @@ enum class component_type : uint8_t
     L,
     Unknown,
     DotPoint,
+    Ground
 };
 
 constexpr int32_t n_component_type = static_cast<int32_t>(component_type::Unknown);

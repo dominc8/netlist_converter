@@ -215,7 +215,7 @@ TEST_F(net_parser_node_tests, multiple_unique_views)
 
     ref_nodes.emplace_back("1", "V1", component_type::V);
     ref_nodes.emplace_back("1", "vdd", component_type::DotPoint);
-    ref_nodes.emplace_back("1", "0", component_type::DotPoint);
+    ref_nodes.emplace_back("1", "0", component_type::Ground);
     ref_nodes.emplace_back("10k", "R1", component_type::R);
     ref_nodes.emplace_back("10k", "r", component_type::DotPoint);
     ref_nodes.emplace_back("10k", "c", component_type::DotPoint);
@@ -248,7 +248,7 @@ TEST_F(net_parser_node_tests, multiple_nonunique_views)
 
     ref_nodes.emplace_back("1", "V1", component_type::V);
     ref_nodes.emplace_back("1", "vdd", component_type::DotPoint);
-    ref_nodes.emplace_back("1", "0", component_type::DotPoint);
+    ref_nodes.emplace_back("1", "0", component_type::Ground);
     ref_nodes.emplace_back("10k", "R1", component_type::R);
     ref_nodes.emplace_back("10k", "r", component_type::DotPoint);
     ref_nodes.emplace_back("10k", "c", component_type::DotPoint);
