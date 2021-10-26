@@ -1,4 +1,4 @@
-# netlist_converter
+# Spice Netlist Visualizer
 Program for visualization of spice netlists and conversion to visual format (.asc understandable by LTSpice).
 
 ## Building and running UTs
