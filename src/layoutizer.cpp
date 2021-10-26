@@ -10,6 +10,7 @@
 #include <ogdf/planarity/VariableEmbeddingInserter.h>
 
 #include <ogdf/fileformats/GraphIO.h>
+#include <ogdf/fileformats/SvgPrinter.h>
 
 namespace
 {
@@ -160,7 +161,12 @@ void save_layout_svg(const graph &g, const std::vector<node> &nodes, const char 
 
     std::string s(filename);
     s.append(".svg");
-    ogdf::GraphIO::write(GA, s, ogdf::GraphIO::drawSVG);
+
+    ogdf::GraphIO::SVGSettings svg_settings;
+    svg_settings.fontSize(16);
+    ogdf::SvgPrinter svg_printer(GA, svg_settings);
+    std::ofstream os(s);
+    svg_printer.draw(os);
 }
 }
 

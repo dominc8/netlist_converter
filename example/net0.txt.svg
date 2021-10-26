@@ -22,26 +22,26 @@
 	</g>
 	<g>
 		<rect x="431" y="318" width="30" height="30" />
-		<text x="421" y="358" text-anchor="middle" dominant-baseline="middle" font-family="Arial" font-size="10" fill="#000000">V1</text>
+		<text x="421" y="358" text-anchor="middle" dominant-baseline="middle" font-family="Arial" font-size="16" fill="#000000">V1</text>
 	</g>
 	<g>
 		<rect x="213.5" y="213.5" width="5" height="5" />
-		<text x="241" y="241" text-anchor="middle" dominant-baseline="middle" font-family="Arial" font-size="10" fill="#000000">vdd</text>
+		<text x="241" y="241" text-anchor="middle" dominant-baseline="middle" font-family="Arial" font-size="16" fill="#000000">vdd</text>
 	</g>
 	<g>
 		<rect x="443.5" y="447.5" width="5" height="5" />
-		<text x="421" y="425" text-anchor="middle" dominant-baseline="middle" font-family="Arial" font-size="10" fill="#000000">0</text>
+		<text x="421" y="425" text-anchor="middle" dominant-baseline="middle" font-family="Arial" font-size="16" fill="#000000">0</text>
 	</g>
 	<g>
 		<rect x="201" y="318" width="30" height="30" />
-		<text x="241" y="358" text-anchor="middle" dominant-baseline="middle" font-family="Arial" font-size="10" fill="#000000">R1</text>
+		<text x="241" y="358" text-anchor="middle" dominant-baseline="middle" font-family="Arial" font-size="16" fill="#000000">R1</text>
 	</g>
 	<g>
 		<rect x="443.5" y="213.5" width="5" height="5" />
-		<text x="421" y="241" text-anchor="middle" dominant-baseline="middle" font-family="Arial" font-size="10" fill="#000000">n4</text>
+		<text x="421" y="241" text-anchor="middle" dominant-baseline="middle" font-family="Arial" font-size="16" fill="#000000">n4</text>
 	</g>
 	<g>
 		<rect x="213.5" y="447.5" width="5" height="5" />
-		<text x="241" y="425" text-anchor="middle" dominant-baseline="middle" font-family="Arial" font-size="10" fill="#000000">n5</text>
+		<text x="241" y="425" text-anchor="middle" dominant-baseline="middle" font-family="Arial" font-size="16" fill="#000000">n5</text>
 	</g>
 </svg>
