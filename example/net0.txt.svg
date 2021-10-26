@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ev="http://www.w3.org/2001/xml-events" version="1.1" baseProfile="full" viewBox="200 212.5 262 241">
+	<g>
+		<g>
+			<polygon points="446,348,444.906,352.375,447.094,352.375," stroke="#000000" />
+			<path fill="none" d=" M446,450 L446,352.375" stroke="#000000" />
+		</g>
+		<g>
+			<polygon points="216,218.5,214.906,222.875,217.094,222.875," stroke="#000000" />
+			<path fill="none" d=" M216,333 L216,222.875" stroke="#000000" />
+		</g>
+		<g>
+			<polygon points="446,318,444.906,313.625,447.094,313.625," stroke="#000000" />
+			<path fill="none" d=" M446,216 L446,313.625" stroke="#000000" />
+		</g>
+		<g>
+			<polygon points="218.5,216,221.5,215.25,221.5,216.75," stroke="#000000" />
+			<path fill="none" d=" M446,216 L218.5,216" stroke="#000000" />
+		</g>
+		<g>
+			<polygon points="443.5,450,440.5,450.75,440.5,449.25," stroke="#000000" />
+			<path fill="none" d=" M216,450 L443.5,450" stroke="#000000" />
+		</g>
+		<g>
+			<polygon points="216,348,214.906,352.375,217.094,352.375," stroke="#000000" />
+			<path fill="none" d=" M216,450 L216,352.375" stroke="#000000" />
+		</g>
+	</g>
+	<g>
+		<rect x="431" y="318" width="30" height="30" />
+		<text x="421" y="358" text-anchor="middle" dominant-baseline="middle" font-family="Arial" font-size="10" fill="#000000">V1</text>
+	</g>
+	<g>
+		<rect x="213.5" y="213.5" width="5" height="5" />
+		<text x="241" y="241" text-anchor="middle" dominant-baseline="middle" font-family="Arial" font-size="10" fill="#000000">vdd</text>
+	</g>
+	<g>
+		<rect x="443.5" y="447.5" width="5" height="5" />
+		<text x="421" y="425" text-anchor="middle" dominant-baseline="middle" font-family="Arial" font-size="10" fill="#000000">0</text>
+	</g>
+	<g>
+		<rect x="201" y="318" width="30" height="30" />
+		<text x="241" y="358" text-anchor="middle" dominant-baseline="middle" font-family="Arial" font-size="10" fill="#000000">R1</text>
+	</g>
+	<g>
+		<rect x="443.5" y="213.5" width="5" height="5" />
+		<text x="421" y="241" text-anchor="middle" dominant-baseline="middle" font-family="Arial" font-size="10" fill="#000000">n4</text>
+	</g>
+	<g>
+		<rect x="213.5" y="447.5" width="5" height="5" />
+		<text x="241" y="425" text-anchor="middle" dominant-baseline="middle" font-family="Arial" font-size="10" fill="#000000">n5</text>
+	</g>
+</svg>

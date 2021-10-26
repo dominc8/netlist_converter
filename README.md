@@ -24,12 +24,16 @@ Directory *example* contains example netlists that can be successfully parsed.
     V1 vdd 0 1
     R1 vdd 0 10k
 
+![net0.txt.svg](./example/net0.txt.svg)
+
 <img src="./example/net0.png" width="350">
 
     V1 r 0 1
     R1 r c 10k
     C1 c l 10n
     L1 l 0 5.3
+
+![net1.txt.svg](./example/net1.txt.svg)
 
 <img src="./example/net1.png" width="754">
 
@@ -38,6 +42,8 @@ Directory *example* contains example netlists that can be successfully parsed.
     C1 c l 10n
     L1 l 0 5.3
     C2 c 0 20n
+
+![net2.txt.svg](./example/net2.txt.svg)
 
 <img src="./example/net2.png" width="754">
 
