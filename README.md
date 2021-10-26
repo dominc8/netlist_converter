@@ -9,8 +9,8 @@ Program for visualization of spice netlists and conversion to visual format (.as
     make run_uts
 
 ## Building and running app
-Current output of app is svg file containing drawn layout of parsed netlist
-and partial asc file.  
+Current output of app is svg file containing drawn layout (to be prettified) of parsed netlist
+and full asc file.  
 Directory *example* contains example netlists that can be successfully parsed.
 
     mkdir build
