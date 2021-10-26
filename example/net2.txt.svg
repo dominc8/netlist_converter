@@ -1,0 +1,99 @@
+<?xml version="1.0"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ev="http://www.w3.org/2001/xml-events" version="1.1" baseProfile="full" viewBox="200 200 953.5 492">
+	<g>
+		<g>
+			<path fill="none" d=" M683,446 L916,446" stroke="#000000" />
+		</g>
+		<g>
+			<path fill="none" d=" M1150,446 L916,446" stroke="#000000" />
+		</g>
+		<g>
+			<path fill="none" d=" M566,446 L683,446" stroke="#000000" />
+		</g>
+		<g>
+			<path fill="none" d=" M216,216 L216,446" stroke="#000000" />
+		</g>
+		<g>
+			<path fill="none" d=" M683,216 L216,216" stroke="#000000" />
+		</g>
+		<g>
+			<path fill="none" d=" M800,676 L450,676" stroke="#000000" />
+		</g>
+		<g>
+			<path fill="none" d=" M450,446 L566,446" stroke="#000000" />
+		</g>
+		<g>
+			<path fill="none" d=" M450,446 L450,676" stroke="#000000" />
+		</g>
+		<g>
+			<path fill="none" d=" M216,676 L450,676" stroke="#000000" />
+		</g>
+		<g>
+			<path fill="none" d=" M216,676 L216,446" stroke="#000000" />
+		</g>
+		<g>
+			<path fill="none" d=" M1150,216 L1150,446" stroke="#000000" />
+		</g>
+		<g>
+			<path fill="none" d=" M1150,216 L683,216" stroke="#000000" />
+		</g>
+		<g>
+			<path fill="none" d=" M1150,676 L1150,446" stroke="#000000" />
+		</g>
+		<g>
+			<path fill="none" d=" M1150,676 L800,676" stroke="#000000" />
+		</g>
+	</g>
+	<g>
+		<rect x="901" y="431" width="30" height="30" />
+		<text x="941" y="471" text-anchor="middle" dominant-baseline="middle" font-family="Arial" font-size="16" fill="#000000">V1</text>
+	</g>
+	<g>
+		<rect x="680.5" y="443.5" width="5" height="5" />
+		<text x="708" y="471" text-anchor="middle" dominant-baseline="middle" font-family="Arial" font-size="16" fill="#000000">r</text>
+	</g>
+	<g>
+		<rect x="1147.5" y="443.5" width="5" height="5" />
+		<text x="1125" y="471" text-anchor="middle" dominant-baseline="middle" font-family="Arial" font-size="16" fill="#000000">0</text>
+	</g>
+	<g>
+		<rect x="551" y="431" width="30" height="30" />
+		<text x="591" y="471" text-anchor="middle" dominant-baseline="middle" font-family="Arial" font-size="16" fill="#000000">R1</text>
+	</g>
+	<g>
+		<rect x="447.5" y="673.5" width="5" height="5" />
+		<text x="475" y="651" text-anchor="middle" dominant-baseline="middle" font-family="Arial" font-size="16" fill="#000000">c</text>
+	</g>
+	<g>
+		<rect x="201" y="431" width="30" height="30" />
+		<text x="241" y="471" text-anchor="middle" dominant-baseline="middle" font-family="Arial" font-size="16" fill="#000000">C1</text>
+	</g>
+	<g>
+		<rect x="213.5" y="213.5" width="5" height="5" />
+		<text x="241" y="241" text-anchor="middle" dominant-baseline="middle" font-family="Arial" font-size="16" fill="#000000">l</text>
+	</g>
+	<g>
+		<rect x="668" y="201" width="30" height="30" />
+		<text x="708" y="241" text-anchor="middle" dominant-baseline="middle" font-family="Arial" font-size="16" fill="#000000">L1</text>
+	</g>
+	<g>
+		<rect x="785" y="661" width="30" height="30" />
+		<text x="825" y="651" text-anchor="middle" dominant-baseline="middle" font-family="Arial" font-size="16" fill="#000000">C2</text>
+	</g>
+	<g>
+		<rect x="447.5" y="443.5" width="5" height="5" />
+		<text x="475" y="471" text-anchor="middle" dominant-baseline="middle" font-family="Arial" font-size="16" fill="#000000">n9</text>
+	</g>
+	<g>
+		<rect x="213.5" y="673.5" width="5" height="5" />
+		<text x="241" y="651" text-anchor="middle" dominant-baseline="middle" font-family="Arial" font-size="16" fill="#000000">n10</text>
+	</g>
+	<g>
+		<rect x="1147.5" y="213.5" width="5" height="5" />
+		<text x="1125" y="241" text-anchor="middle" dominant-baseline="middle" font-family="Arial" font-size="16" fill="#000000">n11</text>
+	</g>
+	<g>
+		<rect x="1147.5" y="673.5" width="5" height="5" />
+		<text x="1125" y="651" text-anchor="middle" dominant-baseline="middle" font-family="Arial" font-size="16" fill="#000000">n12</text>
+	</g>
+</svg>

@@ -10,6 +10,7 @@
 #include <ogdf/planarity/VariableEmbeddingInserter.h>
 
 #include <ogdf/fileformats/GraphIO.h>
+#include <ogdf/fileformats/SvgPrinter.h>
 
 namespace
 {
@@ -107,6 +108,65 @@ int32_t node_uncornerize(node &comp_node, const node &neighbour1, const node &ne
     comp_node.rotation = rotation;
 
     return lost_neighbour_idx;
+}
+
+void save_layout_svg(const graph &g, const std::vector<node> &nodes, const char *filename, int32_t max_x, int32_t max_y)
+{
+    ogdf::Graph G;
+    ogdf::GraphAttributes GA(G,
+        ogdf::GraphAttributes::nodeLabel | ogdf::GraphAttributes::nodeLabelPosition |
+        ogdf::GraphAttributes::nodeGraphics | ogdf::GraphAttributes::nodeType |
+        ogdf::GraphAttributes::edgeGraphics | ogdf::GraphAttributes::edgeType);
+    GA.directed() = false;
+
+    int32_t n_node = g.n_node;
+    ogdf::Array<ogdf::node> v(n_node);
+
+    for (int32_t i = 0; i < n_node; ++i)
+    {
+        v[i] = G.newNode(i);
+    }
+
+    for (int32_t i = 0; i < n_node; ++i)
+    {
+        for (int32_t j = 0; j < i; ++j)
+        {
+            if (g.edge_of(i, j))
+            {
+                G.newEdge(v[i], v[j]);
+            }
+        }
+    }
+
+    ogdf::Array<ogdf::NodeElement*> arr;
+    G.allNodes(arr);
+
+    for (int32_t i = 0; i < n_node; ++i)
+    {
+        constexpr int32_t label_offset = 25;
+        const auto &n = arr[i];
+        float scale = 1.0F / 4;
+        if (static_cast<int32_t>(nodes[i].comp_type) < n_component_type)
+        {
+            scale = 1.5F;
+        }
+        GA.width(n) *= scale;
+        GA.height(n) *= scale;
+        GA.label(n) = nodes[i].name;
+        GA.x(n) = nodes[i].x;
+        GA.y(n) = nodes[i].y;
+        GA.xLabel(n) = nodes[i].x + label_offset < max_x ? label_offset : -label_offset;
+        GA.yLabel(n) = nodes[i].y + label_offset < max_y ? label_offset : -label_offset;
+    }
+
+    std::string s(filename);
+    s.append(".svg");
+
+    ogdf::GraphIO::SVGSettings svg_settings;
+    svg_settings.fontSize(16);
+    ogdf::SvgPrinter svg_printer(GA, svg_settings);
+    std::ofstream os(s);
+    svg_printer.draw(os);
 }
 }
 
@@ -254,15 +314,6 @@ void layout(graph &g, std::vector<node> &nodes, const std::vector<line_view> &vi
         }
     }
 
-    for (int32_t i = 0; i < n_node; ++i)
-    {
-        const auto &n = arr[i];
-        GA.xLabel(n) = nodes[i].x + 30 < max_x ? 30 : -30;
-        GA.yLabel(n) = nodes[i].y + 30 < max_y ? 30 : -30;
-    }
-
-    std::string s(filename);
-    s.append(".svg");
-    ogdf::GraphIO::write(GA, s, ogdf::GraphIO::drawSVG);
+    save_layout_svg(g, nodes, filename, max_x, max_y);
 }
 
