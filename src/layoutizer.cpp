@@ -62,34 +62,42 @@ bool node_is_in_corner(const node &middle_node, const node &neighbour1, const no
 int32_t node_uncornerize(node &comp_node, const node &neighbour1, const node &neighbour2)
 {
     int32_t offset_x, offset_y, rotation;
+    int32_t n2_offset_x, n2_offset_y;
     int32_t lost_neighbour_idx {0};
 
     offset_x = (neighbour1.x - comp_node.x) / 2;
     offset_y = (neighbour1.y - comp_node.y) / 2;
 
-    int32_t n2_offset = (neighbour2.x - comp_node.x) / 2;
-    if (std::abs(n2_offset) > std::abs(offset_x))
+    n2_offset_x = (neighbour2.x - comp_node.x) / 2;
+    n2_offset_y = (neighbour2.y - comp_node.y) / 2;
+
+    LOG_INFO("Offsets: n1=(%d, %d), n2=(%d, %d)", offset_x, offset_y, n2_offset_x, n2_offset_y);
+
+    if (std::abs(n2_offset_x) > std::abs(offset_x))
     {
-        offset_x = n2_offset;
-        lost_neighbour_idx = 1;
+        LOG_INFO("offset_x = n2");
+        offset_x = n2_offset_x;
     }
 
-    n2_offset = (neighbour2.y - comp_node.y) / 2;
-    if (std::abs(n2_offset) > std::abs(offset_y))
+    if (std::abs(n2_offset_y) > std::abs(offset_y))
     {
-        offset_y = n2_offset;
-        lost_neighbour_idx = 1;
+        LOG_INFO("offset_y = n2");
+        offset_y = n2_offset_y;
     }
 
     if (std::abs(offset_x) > std::abs(offset_y))
     {
+        lost_neighbour_idx = offset_x == n2_offset_x ? 0 : 1;
         offset_y = 0;
         rotation = 90;
+        LOG_INFO("offset_x %d chosen, lost_neighbour_idx %d", offset_x, lost_neighbour_idx);
     }
     else
     {
+        lost_neighbour_idx = offset_y == n2_offset_y ? 0 : 1;
         offset_x = 0;
         rotation = 0;
+        LOG_INFO("offset_y %d chosen, lost_neighbour_idx %d", offset_y, lost_neighbour_idx);
     }
 
     LOG_INFO("Moving node %s from (%d, %d) by offset (%d, %d)", comp_node.name, comp_node.x, comp_node.y, offset_x, offset_y);
@@ -161,6 +169,19 @@ void layout(graph &g, std::vector<node> &nodes, const std::vector<line_view> &vi
         max_y = (max_y < nodes[i].y) ? nodes[i].y : max_y;
     }
 
+    LOG_INFO("Graph before:");
+    for (int32_t i = 0; i < g.n_node; ++i)
+    {
+        for (int32_t j = 0; j < g.n_node; ++j)
+        {
+            if (g.edge_of(i, j))
+            {
+                LOG_INFO("%s -> %s", nodes[i].name, nodes[j].name);
+            }
+        }
+    }
+
+
     for (int32_t i = 0; i < n_node; ++i)
     {
         if (static_cast<int32_t>(nodes[i].comp_type) < n_component_type)
@@ -173,9 +194,13 @@ void layout(graph &g, std::vector<node> &nodes, const std::vector<line_view> &vi
             auto &neighbour2 = nodes[neighbours[1]];
             if (node_is_in_corner(comp_node, neighbour1, neighbour2))
             {
-                node new_tmp_node("", "", component_type::DotPoint);
+                char tmp_name[7];
+                sprintf(tmp_name, "n%d", g.n_node);
+                node new_tmp_node("", tmp_name, component_type::DotPoint);
                 new_tmp_node.set_coord(comp_node.x, comp_node.y);
                 int32_t lost_neighbour_idx = node_uncornerize(comp_node, neighbour1, neighbour2);
+                LOG_INFO("%s lost neighbour %s", comp_node.name, nodes[neighbours[lost_neighbour_idx]].name);
+
 
                 nodes.push_back(new_tmp_node);
                 g.edge_of(i, neighbours[lost_neighbour_idx]) = 0;
@@ -184,7 +209,7 @@ void layout(graph &g, std::vector<node> &nodes, const std::vector<line_view> &vi
                 g.edge_of(g.n_node, i) = 1;
                 g.edge_of(g.n_node, neighbours[lost_neighbour_idx]) = 1;
                 g.edge_of(neighbours[lost_neighbour_idx], g.n_node) = 1;
-                LOG_INFO("Added helper node at %d, %d", nodes[g.n_node].name, nodes[g.n_node].x, nodes[g.n_node].y);
+                LOG_INFO("Added helper node %s at %d, %d", nodes[g.n_node].name, nodes[g.n_node].x, nodes[g.n_node].y);
                 g.n_node++;
             }
             else
@@ -195,6 +220,18 @@ void layout(graph &g, std::vector<node> &nodes, const std::vector<line_view> &vi
                     rotation = 90;
                 }
                 comp_node.rotation = rotation;
+            }
+        }
+    }
+
+    LOG_INFO("Graph after:");
+    for (int32_t i = 0; i < g.n_node; ++i)
+    {
+        for (int32_t j = 0; j < g.n_node; ++j)
+        {
+            if (g.edge_of(i, j))
+            {
+                LOG_INFO("%s -> %s", nodes[i].name, nodes[j].name);
             }
         }
     }
