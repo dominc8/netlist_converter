@@ -116,6 +116,7 @@ void save_layout_svg(const graph &g, const std::vector<node> &nodes, const char 
         ogdf::GraphAttributes::nodeLabel | ogdf::GraphAttributes::nodeLabelPosition |
         ogdf::GraphAttributes::nodeGraphics | ogdf::GraphAttributes::nodeType |
         ogdf::GraphAttributes::edgeGraphics | ogdf::GraphAttributes::edgeType);
+    GA.directed() = false;
 
     int32_t n_node = g.n_node;
     ogdf::Array<ogdf::node> v(n_node);

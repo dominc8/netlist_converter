@@ -2,60 +2,46 @@
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ev="http://www.w3.org/2001/xml-events" version="1.1" baseProfile="full" viewBox="200 200 953.5 492">
 	<g>
 		<g>
-			<polygon points="901,446,896.625,447.094,896.625,444.906," stroke="#000000" />
-			<path fill="none" d=" M683,446 L901,446" stroke="#000000" />
+			<path fill="none" d=" M683,446 L916,446" stroke="#000000" />
 		</g>
 		<g>
-			<polygon points="931,446,935.375,444.906,935.375,447.094," stroke="#000000" />
-			<path fill="none" d=" M1150,446 L931,446" stroke="#000000" />
+			<path fill="none" d=" M1150,446 L916,446" stroke="#000000" />
 		</g>
 		<g>
-			<polygon points="680.5,446,676.125,447.094,676.125,444.906," stroke="#000000" />
-			<path fill="none" d=" M566,446 L680.5,446" stroke="#000000" />
+			<path fill="none" d=" M566,446 L683,446" stroke="#000000" />
 		</g>
 		<g>
-			<polygon points="216,431,214.906,426.625,217.094,426.625," stroke="#000000" />
-			<path fill="none" d=" M216,216 L216,426.625" stroke="#000000" />
+			<path fill="none" d=" M216,216 L216,446" stroke="#000000" />
 		</g>
 		<g>
-			<polygon points="218.5,216,222.875,214.906,222.875,217.094," stroke="#000000" />
-			<path fill="none" d=" M683,216 L218.5,216" stroke="#000000" />
+			<path fill="none" d=" M683,216 L216,216" stroke="#000000" />
 		</g>
 		<g>
-			<polygon points="452.5,676,456.875,674.906,456.875,677.094," stroke="#000000" />
-			<path fill="none" d=" M800,676 L452.5,676" stroke="#000000" />
+			<path fill="none" d=" M800,676 L450,676" stroke="#000000" />
 		</g>
 		<g>
-			<polygon points="551,446,546.625,447.094,546.625,444.906," stroke="#000000" />
-			<path fill="none" d=" M450,446 L551,446" stroke="#000000" />
+			<path fill="none" d=" M450,446 L566,446" stroke="#000000" />
 		</g>
 		<g>
-			<polygon points="450,673.5,449.25,670.5,450.75,670.5," stroke="#000000" />
-			<path fill="none" d=" M450,446 L450,670.5" stroke="#000000" />
+			<path fill="none" d=" M450,446 L450,676" stroke="#000000" />
 		</g>
 		<g>
-			<polygon points="447.5,676,444.5,676.75,444.5,675.25," stroke="#000000" />
-			<path fill="none" d=" M216,676 L447.5,676" stroke="#000000" />
+			<path fill="none" d=" M216,676 L450,676" stroke="#000000" />
 		</g>
 		<g>
-			<polygon points="216,461,214.906,465.375,217.094,465.375," stroke="#000000" />
-			<path fill="none" d=" M216,676 L216,465.375" stroke="#000000" />
+			<path fill="none" d=" M216,676 L216,446" stroke="#000000" />
 		</g>
 		<g>
-			<polygon points="1150,443.5,1149.25,440.5,1150.75,440.5," stroke="#000000" />
-			<path fill="none" d=" M1150,216 L1150,440.5" stroke="#000000" />
+			<path fill="none" d=" M1150,216 L1150,446" stroke="#000000" />
 		</g>
 		<g>
-			<polygon points="698,216,702.375,214.906,702.375,217.094," stroke="#000000" />
-			<path fill="none" d=" M1150,216 L698,216" stroke="#000000" />
+			<path fill="none" d=" M1150,216 L683,216" stroke="#000000" />
 		</g>
 		<g>
-			<polygon points="1150,448.5,1149.25,451.5,1150.75,451.5," stroke="#000000" />
-			<path fill="none" d=" M1150,676 L1150,451.5" stroke="#000000" />
+			<path fill="none" d=" M1150,676 L1150,446" stroke="#000000" />
 		</g>
 		<g>
-			<polygon points="815,676,819.375,674.906,819.375,677.094," stroke="#000000" />
-			<path fill="none" d=" M1150,676 L815,676" stroke="#000000" />
+			<path fill="none" d=" M1150,676 L800,676" stroke="#000000" />
 		</g>
 	</g>
 	<g>

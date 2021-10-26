@@ -2,28 +2,22 @@
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ev="http://www.w3.org/2001/xml-events" version="1.1" baseProfile="full" viewBox="200 212.5 262 241">
 	<g>
 		<g>
-			<polygon points="446,348,444.906,352.375,447.094,352.375," stroke="#000000" />
-			<path fill="none" d=" M446,450 L446,352.375" stroke="#000000" />
+			<path fill="none" d=" M446,450 L446,333" stroke="#000000" />
 		</g>
 		<g>
-			<polygon points="216,218.5,214.906,222.875,217.094,222.875," stroke="#000000" />
-			<path fill="none" d=" M216,333 L216,222.875" stroke="#000000" />
+			<path fill="none" d=" M216,333 L216,216" stroke="#000000" />
 		</g>
 		<g>
-			<polygon points="446,318,444.906,313.625,447.094,313.625," stroke="#000000" />
-			<path fill="none" d=" M446,216 L446,313.625" stroke="#000000" />
+			<path fill="none" d=" M446,216 L446,333" stroke="#000000" />
 		</g>
 		<g>
-			<polygon points="218.5,216,221.5,215.25,221.5,216.75," stroke="#000000" />
-			<path fill="none" d=" M446,216 L218.5,216" stroke="#000000" />
+			<path fill="none" d=" M446,216 L216,216" stroke="#000000" />
 		</g>
 		<g>
-			<polygon points="443.5,450,440.5,450.75,440.5,449.25," stroke="#000000" />
-			<path fill="none" d=" M216,450 L443.5,450" stroke="#000000" />
+			<path fill="none" d=" M216,450 L446,450" stroke="#000000" />
 		</g>
 		<g>
-			<polygon points="216,348,214.906,352.375,217.094,352.375," stroke="#000000" />
-			<path fill="none" d=" M216,450 L216,352.375" stroke="#000000" />
+			<path fill="none" d=" M216,450 L216,333" stroke="#000000" />
 		</g>
 	</g>
 	<g>
