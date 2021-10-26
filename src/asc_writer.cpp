@@ -43,32 +43,42 @@ void write_gnd_node(FILE *f, const node &n)
 void write_wire(FILE *f, const node &n1, const node &n2)
 {
     int32_t offset_x[2] {}, offset_y[2] {};
+    int32_t mul[2] {};
+
     if (static_cast<int32_t>(n1.comp_type) < n_component_type)
     {
-        if (n1.x == n2.x)
-        {
-            int32_t mul = (n1.y < n2.y) ? 1 : -1;
-            offset_y[0] = mul * 16;
-        }
-        else
-        {
-            int32_t mul = (n1.x < n2.x) ? 1 : -1;
-            offset_x[0] = mul * 16;
-        }
+        mul[0] = 1;
     }
     if (static_cast<int32_t>(n2.comp_type) < n_component_type)
     {
-        if (n1.x == n2.x)
+        mul[1] = 1;
+    }
+    if (n1.x == n2.x)
+    {
+        if (n1.y > n2.y)
         {
-            int32_t mul = (n1.y < n2.y) ? -1 : 1;
-            offset_y[1] = mul * 16;
+            offset_y[0] = 16;
         }
         else
         {
-            int32_t mul = (n1.x < n2.x) ? -1 : 1;
-            offset_x[1] = mul * 16;
+            offset_y[1] = 16;
         }
     }
+    else
+    {
+        if (n1.x < n2.x)
+        {
+            offset_x[0] = -16;
+        }
+        else
+        {
+            offset_x[1] = -16;
+        }
+    }
+    offset_x[0] *= mul[0];
+    offset_x[1] *= mul[1];
+    offset_y[0] *= mul[0];
+    offset_y[1] *= mul[1];
     LOG_INFO("Offsetting wire from %s by (%d, %d) to %s by (%d, %d)", n1.name, offset_x[0], offset_y[0],
                                                                       n2.name, offset_x[1], offset_y[1]);
     fprintf(f, "WIRE %d %d %d %d\n", n1.x + offset_x[0], n1.y + offset_y[0],
