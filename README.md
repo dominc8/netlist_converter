@@ -19,3 +19,25 @@ Directory *example* contains example netlists that can be successfully parsed.
     make app
     ./app <netlist input file> <asc output file>
 
+## Example input and outputs
+
+    V1 vdd 0 1
+    R1 vdd 0 10k
+
+<img src="./example/net1.png" width="754" height="644">
+
+    V1 r 0 1
+    R1 r c 10k
+    C1 c l 10n
+    L1 l 0 5.3
+
+<img src="./example/net1.png" width="754" height="220">
+
+    V1 r 0 1
+    R1 r c 10k
+    C1 c l 10n
+    L1 l 0 5.3
+    C2 c 0 20n
+
+<img src="./example/net2.png" width="754" height="407">
+

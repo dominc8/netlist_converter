@@ -100,7 +100,8 @@ void write_layout(FILE *f, const graph &g, const std::vector<node> &nodes)
         }
         else
         {
-            fprintf(f, "FLAG %d %d %s\n", n.x, n.y, n.name);
+            // mark all nodes with their names, for debug only
+            // fprintf(f, "FLAG %d %d %s\n", n.x, n.y, n.name);
         }
     }
 
