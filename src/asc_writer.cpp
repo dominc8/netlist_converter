@@ -26,8 +26,8 @@ void write_node_symbol(FILE *f, const node &n)
     if (n.comp_type != component_type::V)
     {
         x = n.rotation == 0 ? x - 16 : x;
+        y = n.rotation == 90 ? y - 16 : y;
     }
-    y = n.rotation == 90 ? y - 16 : y;
     fprintf(f, "SYMBOL %s %d %d R%d\n"
                "SYMATTR InstName %s\n"
                "SYMATTR Value %s\n",
