@@ -1,6 +1,7 @@
 #ifndef NET_PARSER_HPP
 #define NET_PARSER_HPP
 
+#include "component_type.hpp"
 #include "graph.hpp"
 #include "line_view.hpp"
 #include "node.hpp"

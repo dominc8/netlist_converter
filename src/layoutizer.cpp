@@ -1,3 +1,4 @@
+#include "component_type.hpp"
 #include "layoutizer.hpp"
 #include "logger.hpp"
 #include <ogdf/basic/graph_generators.h>

@@ -1,6 +1,7 @@
 #ifndef NODE_HPP
 #define NODE_HPP
 
+#include "component_type.hpp"
 #include "line_view.hpp"
 #include <stdint.h>
 #include <vector>

@@ -1,4 +1,5 @@
 #include "asc_writer.hpp"
+#include "component_type.hpp"
 #include "logger.hpp"
 
 namespace
