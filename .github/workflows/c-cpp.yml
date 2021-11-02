@@ -16,7 +16,7 @@ jobs:
         mkdir build
         cd build
         cmake ..
-        make app
+        make -j$(nproc) app
   UT:
     runs-on: ubuntu-latest
     steps:
@@ -26,4 +26,4 @@ jobs:
         mkdir build
         cd build
         cmake ..
-        make run_uts
+        make -j$(nproc) run_uts
