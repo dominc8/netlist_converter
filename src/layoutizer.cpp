@@ -4,8 +4,7 @@
 #include "ogdf_utils.hpp"
 #include <stdio.h>
 #include <math.h>
-namespace
-{
+
 void get_neighbours(const graph &g, int32_t node_idx, int32_t *neighbours)
 {
     int32_t tmp_neighbours[3];
@@ -86,7 +85,6 @@ int32_t node_uncornerize(node &comp_node, const node &neighbour1, const node &ne
     comp_node.rotation = rotation;
 
     return lost_neighbour_idx;
-}
 }
 
 void layout(graph &g, std::vector<node> &nodes, const std::vector<line_view> &views, const char *filename)
