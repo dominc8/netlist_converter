@@ -111,7 +111,7 @@ int32_t node_uncornerize(node &comp_node, const node &neighbour1, const node &ne
     return lost_neighbour_idx;
 }
 
-void save_layout_svg(const graph &g, const std::vector<node> &nodes, const char *filename, int32_t max_x, int32_t max_y)
+void save_layout_svg(const graph &g, const std::vector<node> &nodes, const char *filename)
 {
     ogdf::Graph G;
     ogdf::GraphAttributes GA(G,
@@ -120,8 +120,17 @@ void save_layout_svg(const graph &g, const std::vector<node> &nodes, const char 
         ogdf::GraphAttributes::edgeGraphics | ogdf::GraphAttributes::edgeType);
     GA.directed() = false;
 
+    int32_t max_x = 0;
+    int32_t max_y = 0;
     int32_t n_node = g.n_node;
     ogdf::Array<ogdf::node> v(n_node);
+
+    for (int32_t i = 0; i < n_node; ++i)
+    {
+        const auto &n = nodes[i];
+        max_x = (max_x < n.x) ? n.x : max_x;
+        max_y = (max_y < n.y) ? n.y : max_y;
+    }
 
     for (int32_t i = 0; i < n_node; ++i)
     {
@@ -168,6 +177,10 @@ void save_layout_svg(const graph &g, const std::vector<node> &nodes, const char 
     ogdf::SvgPrinter svg_printer(GA, svg_settings);
     std::ofstream os(s);
     svg_printer.draw(os);
+}
+
+void ogdf_layout()
+{
 }
 }
 
@@ -216,18 +229,10 @@ void layout(graph &g, std::vector<node> &nodes, const std::vector<line_view> &vi
 
     G.allNodes(arr);
 
-    int32_t max_x = 0;
-    int32_t max_y = 0;
     for (int32_t i = 0; i < n_node; ++i)
     {
         const auto &n = arr[i];
         nodes[i].set_coord(GA.x(n), GA.y(n));
-        if (nodes[i].comp_type != component_type::DotPoint)
-        {
-            GA.label(n) = nodes[i].name;
-        }
-        max_x = (max_x < nodes[i].x) ? nodes[i].x : max_x;
-        max_y = (max_y < nodes[i].y) ? nodes[i].y : max_y;
     }
 
     LOG_INFO("Graph before:");
@@ -315,6 +320,6 @@ void layout(graph &g, std::vector<node> &nodes, const std::vector<line_view> &vi
         }
     }
 
-    save_layout_svg(g, nodes, filename, max_x, max_y);
+    save_layout_svg(g, nodes, filename);
 }
 
