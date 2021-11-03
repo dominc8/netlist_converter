@@ -179,12 +179,7 @@ void save_layout_svg(const graph &g, const std::vector<node> &nodes, const char 
     svg_printer.draw(os);
 }
 
-void ogdf_layout()
-{
-}
-}
-
-void layout(graph &g, std::vector<node> &nodes, const std::vector<line_view> &views, const char *filename)
+void ogdf_layout(graph &g, std::vector<node> &nodes)
 {
     int32_t n_node = nodes.size();
     ogdf::Graph G;
@@ -234,7 +229,12 @@ void layout(graph &g, std::vector<node> &nodes, const std::vector<line_view> &vi
         const auto &n = arr[i];
         nodes[i].set_coord(GA.x(n), GA.y(n));
     }
+}
+}
 
+void layout(graph &g, std::vector<node> &nodes, const std::vector<line_view> &views, const char *filename)
+{
+    ogdf_layout(g, nodes);
     LOG_INFO("Graph before:");
     for (int32_t i = 0; i < g.n_node; ++i)
     {
@@ -247,7 +247,7 @@ void layout(graph &g, std::vector<node> &nodes, const std::vector<line_view> &vi
         }
     }
 
-
+    int32_t n_node = nodes.size();
     for (int32_t i = 0; i < n_node; ++i)
     {
         if (static_cast<int32_t>(nodes[i].comp_type) < n_component_type)
