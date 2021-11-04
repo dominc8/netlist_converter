@@ -27,7 +27,12 @@ target_compile_definitions(${PROJECT_NAME} PRIVATE
     $<$<CONFIG:Debug>:DEBUG>
 )
 
-add_executable(app ${CMAKE_SOURCE_DIR}/src/app.cpp ${CMAKE_SOURCE_DIR}/src/ogdf_utils.cpp)
+set(APP_SRC_FILES
+    ${CMAKE_SOURCE_DIR}/src/app.cpp
+    ${CMAKE_SOURCE_DIR}/src/ogdf_utils.cpp
+)
+
+add_executable(app ${APP_SRC_FILES})
 target_compile_definitions(app PRIVATE
     $<$<CONFIG:Debug>:DEBUG>
 )
