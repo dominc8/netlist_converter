@@ -115,3 +115,56 @@ TEST_F(layoutizer_tests, get_neighbours)
     check_neighbours(g, 3, 1, 2);
 }
 
+TEST_F(layoutizer_tests, node_uncornerize)
+{
+    node comp_node("", "", component_type::V);
+    node n1;
+    node n2;
+
+    /*
+     * n1     c
+     *        n2
+     * */
+    n1.set_coord(-10, 10);
+    n2.set_coord(40, -10);
+    comp_node.set_coord(40, 10);
+    EXPECT_EQ(node_uncornerize(comp_node, n1, n2), 1);
+    comp_node.set_coord(40, 10);
+    EXPECT_EQ(node_uncornerize(comp_node, n2, n1), 0);
+
+    /*
+     * c      n1
+     * n2
+     * */
+    n1.set_coord(50, 20);
+    n2.set_coord(0, 10);
+    comp_node.set_coord(0, 20);
+    EXPECT_EQ(node_uncornerize(comp_node, n1, n2), 1);
+    comp_node.set_coord(0, 20);
+    EXPECT_EQ(node_uncornerize(comp_node, n2, n1), 0);
+
+    /*
+     * c n1
+     *
+     * n2
+     * */
+    n1.set_coord(20, 10);
+    n2.set_coord(10, -40);
+    comp_node.set_coord(10, 10);
+    EXPECT_EQ(node_uncornerize(comp_node, n1, n2), 0);
+    comp_node.set_coord(10, 10);
+    EXPECT_EQ(node_uncornerize(comp_node, n2, n1), 1);
+
+    /*
+     * n1 c
+     *
+     *    n2
+     * */
+    n1.set_coord(-20, 100);
+    n2.set_coord(-10, 20);
+    comp_node.set_coord(-10, 100);
+    EXPECT_EQ(node_uncornerize(comp_node, n1, n2), 0);
+    comp_node.set_coord(-10, 100);
+    EXPECT_EQ(node_uncornerize(comp_node, n2, n1), 1);
+}
+
