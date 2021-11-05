@@ -10,6 +10,7 @@ const char* const symbol_map[n_component_type] =
     "res",
     "cap",
     "ind",
+    "current"
 };
 }
 
@@ -24,7 +25,7 @@ void write_node_symbol(FILE *f, const node &n)
     int32_t x = n.x;
     int32_t y = n.y;
 
-    if (n.comp_type != component_type::V)
+    if (!rotation_matters(n.comp_type))
     {
         x = n.rotation == 0 ? x - 16 : x;
         y = n.rotation == 90 ? y - 16 : y;

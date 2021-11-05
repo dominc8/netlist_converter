@@ -37,6 +37,20 @@ bool node_is_in_corner(const node &middle_node, const node &neighbour1, const no
     return is_in_corner;
 }
 
+bool node_is_on_tip(const node &middle_node, const node &neighbour1, const node &neighbour2)
+{
+    bool is_on_tip = false;
+
+    if (((middle_node.x != neighbour1.x) && (middle_node.y != neighbour1.y)) ||
+        ((middle_node.x != neighbour2.x) && (middle_node.y != neighbour2.y)))
+    {
+        is_on_tip = true;
+    }
+
+    return is_on_tip;
+}
+
+
 int32_t node_uncornerize(node &comp_node, const node &neighbour1, const node &neighbour2)
 {
     int32_t offset_x, offset_y, rotation;
@@ -101,6 +115,7 @@ void layout(graph &g, std::vector<node> &nodes, const std::vector<line_view> &vi
             }
         }
     }
+    save_layout_svg(g, nodes, "initial.svg");
 
     int32_t n_node = nodes.size();
     for (int32_t i = 0; i < n_node; ++i)
@@ -133,6 +148,41 @@ void layout(graph &g, std::vector<node> &nodes, const std::vector<line_view> &vi
                 LOG_INFO("Added helper node %s at %d, %d", nodes[g.n_node].name, nodes[g.n_node].x, nodes[g.n_node].y);
                 g.n_node++;
             }
+            else if (node_is_on_tip(comp_node, neighbour1, neighbour2))
+            {
+                /*
+                 * a----b
+                 * |  /
+                 * c /
+                 *
+                 * 1. move c so it will be the same distance from a and b
+                 * 2. add t1 and t2 nodes that will be crosspoints between a/b and c
+                 * 3. graph creation might need to allocate more redundant nodes, although not sure, need to check
+                 *
+                 * a---------b
+                 * |         |
+                 * t1---c---t2
+                 *
+                 * */
+                LOG_INFO("Node %s is on tip", comp_node.name);
+                //char tmp_name[7];
+                //sprintf(tmp_name, "n%d", g.n_node);
+                //node new_tmp_node("", tmp_name, component_type::DotPoint);
+                //new_tmp_node.set_coord(comp_node.x, comp_node.y);
+                //int32_t lost_neighbour_idx = node_untip(comp_node, neighbour1, neighbour2);
+                //LOG_INFO("%s lost neighbour %s", comp_node.name, nodes[neighbours[lost_neighbour_idx]].name);
+
+
+                //nodes.push_back(new_tmp_node);
+                //g.edge_of(i, neighbours[lost_neighbour_idx]) = 0;
+                //g.edge_of(neighbours[lost_neighbour_idx], i) = 0;
+                //g.edge_of(i, g.n_node) = 1;
+                //g.edge_of(g.n_node, i) = 1;
+                //g.edge_of(g.n_node, neighbours[lost_neighbour_idx]) = 1;
+                //g.edge_of(neighbours[lost_neighbour_idx], g.n_node) = 1;
+                //LOG_INFO("Added helper node %s at %d, %d", nodes[g.n_node].name, nodes[g.n_node].x, nodes[g.n_node].y);
+                //g.n_node++;
+            }
             else
             {
                 int32_t rotation = 0;
@@ -157,20 +207,20 @@ void layout(graph &g, std::vector<node> &nodes, const std::vector<line_view> &vi
         }
     }
 
-    // voltage rotation
+    // voltage/current rotation
     for (int32_t i = 0; i < views.size(); ++i)
     {
-        if (component_type::V == views[i].comp_type)
+        if (rotation_matters(views[i].comp_type))
         {
             int32_t v_idx = node_find_idx_by_name(nodes, &views[i].name[0]);
             int32_t plus_idx = node_find_idx_by_name(nodes, &views[i].p0[0]);
-            node &v_node = nodes[v_idx];
+            node &rot_node = nodes[v_idx];
             const node &plus_node = nodes[plus_idx];
 
-            if (((v_node.rotation == 0) && (plus_node.y > v_node.y)) ||
-                ((v_node.rotation == 90) && (plus_node.x < v_node.x)))
+            if (((rot_node.rotation == 0) && (plus_node.y > rot_node.y)) ||
+                ((rot_node.rotation == 90) && (plus_node.x < rot_node.x)))
             {
-                v_node.rotation += 180;
+                rot_node.rotation += 180;
             }
         }
     }
