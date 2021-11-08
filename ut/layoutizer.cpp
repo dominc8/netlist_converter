@@ -174,7 +174,7 @@ TEST_F(layoutizer_tests, node_uncornerize)
 }
 
 
-TEST_F(layoutizer_tests, node_untip)
+TEST_F(layoutizer_tests, node_move_from_tip)
 {
     node comp_node("", "", component_type::V);
     node n1;
@@ -188,11 +188,11 @@ TEST_F(layoutizer_tests, node_untip)
     n2.set_coord(-10, -30);
 
     comp_node.set_coord(40, 10);
-    node_untip(comp_node, n1, n2);
+    node_move_from_tip(comp_node, n1, n2);
     check_coords(comp_node, 40, -10);
 
     comp_node.set_coord(40, 10);
-    node_untip(comp_node, n1, n2);
+    node_move_from_tip(comp_node, n1, n2);
     check_coords(comp_node, 40, -10);
 
     /*
@@ -200,11 +200,11 @@ TEST_F(layoutizer_tests, node_untip)
      *      n2
      * */
     comp_node.set_coord(-40, 10);
-    node_untip(comp_node, n1, n2);
+    node_move_from_tip(comp_node, n1, n2);
     check_coords(comp_node, -40, -10);
 
     comp_node.set_coord(-40, 10);
-    node_untip(comp_node, n1, n2);
+    node_move_from_tip(comp_node, n1, n2);
     check_coords(comp_node, -40, -10);
 
     /*
@@ -212,11 +212,11 @@ TEST_F(layoutizer_tests, node_untip)
      * n2   c
      * */
     comp_node.set_coord(40, -30);
-    node_untip(comp_node, n1, n2);
+    node_move_from_tip(comp_node, n1, n2);
     check_coords(comp_node, 40, -10);
 
     comp_node.set_coord(40, -30);
-    node_untip(comp_node, n1, n2);
+    node_move_from_tip(comp_node, n1, n2);
     check_coords(comp_node, 40, -10);
 
     /*
@@ -224,11 +224,11 @@ TEST_F(layoutizer_tests, node_untip)
      * c    n2
      * */
     comp_node.set_coord(-40, -30);
-    node_untip(comp_node, n1, n2);
+    node_move_from_tip(comp_node, n1, n2);
     check_coords(comp_node, -40, -10);
 
     comp_node.set_coord(-40, -30);
-    node_untip(comp_node, n1, n2);
+    node_move_from_tip(comp_node, n1, n2);
     check_coords(comp_node, -40, -10);
 }
 

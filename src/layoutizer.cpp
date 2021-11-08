@@ -101,7 +101,7 @@ int32_t node_uncornerize(node &comp_node, const node &neighbour1, const node &ne
     return lost_neighbour_idx;
 }
 
-void node_untip(node &comp_node, const node &neighbour1, const node &neighbour2)
+void node_move_from_tip(node &comp_node, const node &neighbour1, const node &neighbour2)
 {
     if (neighbour1.x == neighbour2.x)
     {
@@ -133,7 +133,6 @@ void layout(graph &g, std::vector<node> &nodes, const std::vector<line_view> &vi
             }
         }
     }
-    save_layout_svg(g, nodes, "initial.svg");
 
     int32_t n_node = nodes.size();
     for (int32_t i = 0; i < n_node; ++i)
@@ -175,7 +174,6 @@ void layout(graph &g, std::vector<node> &nodes, const std::vector<line_view> &vi
                  *
                  * 1. move c so it will be the same distance from a and b
                  * 2. add t1 and t2 nodes that will be crosspoints between a/b and c
-                 * 3. graph creation might need to allocate more redundant nodes, although not sure, need to check
                  *
                  * a---------b
                  * |         |
@@ -183,24 +181,42 @@ void layout(graph &g, std::vector<node> &nodes, const std::vector<line_view> &vi
                  *
                  * */
                 LOG_INFO("Node %s is on tip", comp_node.name);
-                node_untip(comp_node, neighbour1, neighbour2);
-                //char tmp_name[7];
-                //sprintf(tmp_name, "n%d", g.n_node);
-                //node new_tmp_node("", tmp_name, component_type::DotPoint);
-                //new_tmp_node.set_coord(comp_node.x, comp_node.y);
-                //int32_t lost_neighbour_idx = node_untip(comp_node, neighbour1, neighbour2);
-                //LOG_INFO("%s lost neighbour %s", comp_node.name, nodes[neighbours[lost_neighbour_idx]].name);
+                node_move_from_tip(comp_node, neighbour1, neighbour2);
 
+                char tmp_name[7];
+                sprintf(tmp_name, "n%d", g.n_node);
+                node t1("", tmp_name, component_type::DotPoint);
+                sprintf(tmp_name, "n%d", g.n_node + 1);
+                node t2("", tmp_name, component_type::DotPoint);
 
-                //nodes.push_back(new_tmp_node);
-                //g.edge_of(i, neighbours[lost_neighbour_idx]) = 0;
-                //g.edge_of(neighbours[lost_neighbour_idx], i) = 0;
-                //g.edge_of(i, g.n_node) = 1;
-                //g.edge_of(g.n_node, i) = 1;
-                //g.edge_of(g.n_node, neighbours[lost_neighbour_idx]) = 1;
-                //g.edge_of(neighbours[lost_neighbour_idx], g.n_node) = 1;
-                //LOG_INFO("Added helper node %s at %d, %d", nodes[g.n_node].name, nodes[g.n_node].x, nodes[g.n_node].y);
-                //g.n_node++;
+                if (comp_node.rotation == 0)
+                {
+                    t1.set_coord(comp_node.x, neighbour1.y);
+                    t2.set_coord(comp_node.x, neighbour2.y);
+                }
+                else
+                {
+                    t1.set_coord(neighbour1.x, comp_node.y);
+                    t2.set_coord(neighbour2.x, comp_node.y);
+                }
+
+                LOG_INFO("Added 2 nodes for untipping at (%d, %d) and (%d, %d)", t1.x, t1.y, t2.x, t2.y);
+
+                nodes.push_back(t1);
+                nodes.push_back(t2);
+                g.edge_of(i, neighbours[0]) = 0;
+                g.edge_of(i, neighbours[1]) = 0;
+                g.edge_of(i, g.n_node) = 1;
+                g.edge_of(i, g.n_node + 1) = 1;
+                g.edge_of(neighbours[0], i) = 0;
+                g.edge_of(neighbours[0], g.n_node) = 1;
+                g.edge_of(neighbours[1], i) = 0;
+                g.edge_of(neighbours[1], g.n_node + 1) = 1;
+                g.edge_of(g.n_node, i) = 1;
+                g.edge_of(g.n_node, neighbours[0]) = 1;
+                g.edge_of(g.n_node + 1, i) = 1;
+                g.edge_of(g.n_node + 1, neighbours[1]) = 1;
+                g.n_node += 2;
             }
             else
             {
@@ -231,9 +247,9 @@ void layout(graph &g, std::vector<node> &nodes, const std::vector<line_view> &vi
     {
         if (rotation_matters(views[i].comp_type))
         {
-            int32_t v_idx = node_find_idx_by_name(nodes, &views[i].name[0]);
+            int32_t rot_idx = node_find_idx_by_name(nodes, &views[i].name[0]);
             int32_t plus_idx = node_find_idx_by_name(nodes, &views[i].p0[0]);
-            node &rot_node = nodes[v_idx];
+            node &rot_node = nodes[rot_idx];
             const node &plus_node = nodes[plus_idx];
 
             if (((rot_node.rotation == 0) && (plus_node.y > rot_node.y)) ||
