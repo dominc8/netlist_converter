@@ -299,7 +299,7 @@ TEST_F(net_parser_graph_tests, proper_graph)
 
     constexpr int32_t n_nodes = 8;
     constexpr int32_t n_component_node = 4;
-    constexpr int32_t n_all_node = n_nodes + n_component_node;
+    constexpr int32_t n_all_node = n_nodes + 2 * n_component_node;
     uint8_t ref_matrix[n_all_node][n_all_node] =
     {
         { 0, 1, 1, 0, 0, 0, 0, 0 }, //V1

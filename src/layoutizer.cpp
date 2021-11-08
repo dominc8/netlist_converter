@@ -101,6 +101,24 @@ int32_t node_uncornerize(node &comp_node, const node &neighbour1, const node &ne
     return lost_neighbour_idx;
 }
 
+void node_untip(node &comp_node, const node &neighbour1, const node &neighbour2)
+{
+    if (neighbour1.x == neighbour2.x)
+    {
+        comp_node.y = (neighbour1.y + neighbour2.y) / 2;
+        comp_node.rotation = 0;
+    }
+    else if (neighbour1.y == neighbour2.y)
+    {
+        comp_node.x = (neighbour1.x + neighbour2.x) / 2;
+        comp_node.rotation = 90;
+    }
+    else
+    {
+        LOG_WARN("Called to untip %s but neighbours are not aligned", comp_node.name);
+    }
+}
+
 void layout(graph &g, std::vector<node> &nodes, const std::vector<line_view> &views, const char *filename)
 {
     ogdf_layout(g, nodes);
@@ -165,6 +183,7 @@ void layout(graph &g, std::vector<node> &nodes, const std::vector<line_view> &vi
                  *
                  * */
                 LOG_INFO("Node %s is on tip", comp_node.name);
+                node_untip(comp_node, neighbour1, neighbour2);
                 //char tmp_name[7];
                 //sprintf(tmp_name, "n%d", g.n_node);
                 //node new_tmp_node("", tmp_name, component_type::DotPoint);
