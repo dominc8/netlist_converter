@@ -1,0 +1,102 @@
+<?xml version="1.0"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ev="http://www.w3.org/2001/xml-events" version="1.1" baseProfile="full" viewBox="212.5 200 719.5 726">
+	<g>
+		<g>
+			<path fill="none" d=" M216,680 L450,680" stroke="#000000" />
+		</g>
+		<g>
+			<path fill="none" d=" M683,680 L450,680" stroke="#000000" />
+		</g>
+		<g>
+			<path fill="none" d=" M683,216 L449,216" stroke="#000000" />
+		</g>
+		<g>
+			<path fill="none" d=" M683,450 L683,680" stroke="#000000" />
+		</g>
+		<g>
+			<path fill="none" d=" M683,450 L683,216" stroke="#000000" />
+		</g>
+		<g>
+			<path fill="none" d=" M216,910 L216,680" stroke="#000000" />
+		</g>
+		<g>
+			<path fill="none" d=" M216,910 L449,910" stroke="#000000" />
+		</g>
+		<g>
+			<path fill="none" d=" M683,910 L683,680" stroke="#000000" />
+		</g>
+		<g>
+			<path fill="none" d=" M683,910 L449,910" stroke="#000000" />
+		</g>
+		<g>
+			<path fill="none" d=" M216,216 L216,680" stroke="#000000" />
+		</g>
+		<g>
+			<path fill="none" d=" M216,216 L449,216" stroke="#000000" />
+		</g>
+		<g>
+			<path fill="none" d=" M916,680 L683,680" stroke="#000000" />
+		</g>
+		<g>
+			<path fill="none" d=" M916,680 L916,448" stroke="#000000" />
+		</g>
+		<g>
+			<path fill="none" d=" M916,216 L683,216" stroke="#000000" />
+		</g>
+		<g>
+			<path fill="none" d=" M916,216 L916,448" stroke="#000000" />
+		</g>
+	</g>
+	<g>
+		<rect x="435" y="665" width="30" height="30" />
+		<text x="475" y="705" text-anchor="middle" dominant-baseline="middle" font-family="Arial" font-size="16" fill="#000000">I1</text>
+	</g>
+	<g>
+		<rect x="213.5" y="677.5" width="5" height="5" />
+		<text x="241" y="705" text-anchor="middle" dominant-baseline="middle" font-family="Arial" font-size="16" fill="#000000">r</text>
+	</g>
+	<g>
+		<rect x="680.5" y="677.5" width="5" height="5" />
+		<text x="708" y="705" text-anchor="middle" dominant-baseline="middle" font-family="Arial" font-size="16" fill="#000000">0</text>
+	</g>
+	<g>
+		<rect x="434" y="895" width="30" height="30" />
+		<text x="474" y="885" text-anchor="middle" dominant-baseline="middle" font-family="Arial" font-size="16" fill="#000000">R1</text>
+	</g>
+	<g>
+		<rect x="434" y="201" width="30" height="30" />
+		<text x="474" y="241" text-anchor="middle" dominant-baseline="middle" font-family="Arial" font-size="16" fill="#000000">C1</text>
+	</g>
+	<g>
+		<rect x="680.5" y="213.5" width="5" height="5" />
+		<text x="708" y="241" text-anchor="middle" dominant-baseline="middle" font-family="Arial" font-size="16" fill="#000000">l</text>
+	</g>
+	<g>
+		<rect x="668" y="435" width="30" height="30" />
+		<text x="708" y="475" text-anchor="middle" dominant-baseline="middle" font-family="Arial" font-size="16" fill="#000000">L1</text>
+	</g>
+	<g>
+		<rect x="901" y="433" width="30" height="30" />
+		<text x="891" y="473" text-anchor="middle" dominant-baseline="middle" font-family="Arial" font-size="16" fill="#000000">C2</text>
+	</g>
+	<g>
+		<rect x="213.5" y="907.5" width="5" height="5" />
+		<text x="241" y="885" text-anchor="middle" dominant-baseline="middle" font-family="Arial" font-size="16" fill="#000000">n8</text>
+	</g>
+	<g>
+		<rect x="680.5" y="907.5" width="5" height="5" />
+		<text x="708" y="885" text-anchor="middle" dominant-baseline="middle" font-family="Arial" font-size="16" fill="#000000">n9</text>
+	</g>
+	<g>
+		<rect x="213.5" y="213.5" width="5" height="5" />
+		<text x="241" y="241" text-anchor="middle" dominant-baseline="middle" font-family="Arial" font-size="16" fill="#000000">n10</text>
+	</g>
+	<g>
+		<rect x="913.5" y="677.5" width="5" height="5" />
+		<text x="891" y="705" text-anchor="middle" dominant-baseline="middle" font-family="Arial" font-size="16" fill="#000000">n11</text>
+	</g>
+	<g>
+		<rect x="913.5" y="213.5" width="5" height="5" />
+		<text x="891" y="241" text-anchor="middle" dominant-baseline="middle" font-family="Arial" font-size="16" fill="#000000">n12</text>
+	</g>
+</svg>

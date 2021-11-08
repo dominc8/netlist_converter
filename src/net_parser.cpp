@@ -13,6 +13,7 @@ constexpr char comp_type_map[n_component_type] =
     'R',
     'C',
     'L',
+    'I'
 };
 }
 

@@ -18,6 +18,11 @@ protected:
                                      ((neighbour1 == neighbours[1]) && (neighbour2 == neighbours[0]));
         EXPECT_EQ(are_proper_neighbours, true);
     }
+    void check_coords(const node &n, int32_t x, int32_t y)
+    {
+        EXPECT_EQ(n.x, x);
+        EXPECT_EQ(n.y, y);
+    }
 };
 
 
@@ -166,5 +171,64 @@ TEST_F(layoutizer_tests, node_uncornerize)
     EXPECT_EQ(node_uncornerize(comp_node, n1, n2), 0);
     comp_node.set_coord(-10, 100);
     EXPECT_EQ(node_uncornerize(comp_node, n2, n1), 1);
+}
+
+
+TEST_F(layoutizer_tests, node_move_from_tip)
+{
+    node comp_node("", "", component_type::V);
+    node n1;
+    node n2;
+
+    /*
+     * n1   c
+     * n2
+     * */
+    n1.set_coord(-10, 10);
+    n2.set_coord(-10, -30);
+
+    comp_node.set_coord(40, 10);
+    node_move_from_tip(comp_node, n1, n2);
+    check_coords(comp_node, 40, -10);
+
+    comp_node.set_coord(40, 10);
+    node_move_from_tip(comp_node, n1, n2);
+    check_coords(comp_node, 40, -10);
+
+    /*
+     * c    n1
+     *      n2
+     * */
+    comp_node.set_coord(-40, 10);
+    node_move_from_tip(comp_node, n1, n2);
+    check_coords(comp_node, -40, -10);
+
+    comp_node.set_coord(-40, 10);
+    node_move_from_tip(comp_node, n1, n2);
+    check_coords(comp_node, -40, -10);
+
+    /*
+     * n1
+     * n2   c
+     * */
+    comp_node.set_coord(40, -30);
+    node_move_from_tip(comp_node, n1, n2);
+    check_coords(comp_node, 40, -10);
+
+    comp_node.set_coord(40, -30);
+    node_move_from_tip(comp_node, n1, n2);
+    check_coords(comp_node, 40, -10);
+
+    /*
+     *      n1
+     * c    n2
+     * */
+    comp_node.set_coord(-40, -30);
+    node_move_from_tip(comp_node, n1, n2);
+    check_coords(comp_node, -40, -10);
+
+    comp_node.set_coord(-40, -30);
+    node_move_from_tip(comp_node, n1, n2);
+    check_coords(comp_node, -40, -10);
 }
 

@@ -47,3 +47,12 @@ Directory *example* contains example netlists that can be successfully parsed.
 
 <img src="./example/net2.png">
 
+    I1 r 0 1
+    R1 r 0 10k
+    C1 r l 10n
+    L1 l 0 5.3
+    C2 l 0 20n
+
+![net3.txt.svg](./example/net3.txt.svg)
+
+<img src="./example/net3.png">
