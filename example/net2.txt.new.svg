@@ -50,4 +50,7 @@
             <path fill="none" d="M 1150 676 L 800 676" stroke="#000000" />
         </g>
     </g>
+    <g>
+        <rect x="546" y="436" width="40" height="20" style="fill:#ffffff;stroke:#000000;stroke-width:1" />
+    </g>
 </svg>

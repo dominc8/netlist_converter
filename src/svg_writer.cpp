@@ -71,6 +71,63 @@ void write_svg_wires(FILE *f, const graph &g, const std::vector<node> &nodes)
     }
     fprintf(f, "    </g>\n");
 }
+
+void write_svg_component_node(FILE *f, const node &n)
+{
+    switch(n.comp_type)
+    {
+        case component_type::R:
+        {
+            constexpr int32_t W = 20;
+            constexpr int32_t L = 40;
+            int32_t rect_x, rect_y, rect_w, rect_h;
+            if (n.rotation == 0)
+            {
+                rect_x = n.x - W/2;
+                rect_y = n.y - L/2;
+                rect_w = W;
+                rect_h = L;
+            }
+            else
+            {
+                rect_x = n.x - L/2;
+                rect_y = n.y - W/2;
+                rect_w = L;
+                rect_h = W;
+            }
+            fprintf(f, "    <g>\n"
+                       "        <rect x=\"%d\" y=\"%d\" width=\"%d\" height=\"%d\" style=\"fill:#ffffff;stroke:#000000;stroke-width:1\" />\n"
+                       "    </g>\n",
+                       rect_x, rect_y, rect_w, rect_h);
+            break;
+        }
+        //case component_type::V:
+        //case component_type::L:
+        //case component_type::C:
+        //case component_type::I:
+        default:
+            LOG_WARN("Type of node %s not yet implemented", n.name);
+    }
+}
+
+void write_svg_ground_node(FILE *f, const node &n)
+{
+}
+
+void write_svg_nodes(FILE *f, const std::vector<node> &nodes)
+{
+    for (const auto &n : nodes)
+    {
+        if (static_cast<int32_t>(n.comp_type) < n_component_type)
+        {
+            write_svg_component_node(f, n);
+        }
+        else if (n.comp_type == component_type::Ground)
+        {
+            write_svg_ground_node(f, n);
+        }
+    }
+}
 }
 
 void write_layout_svg(const graph &g, const std::vector<node> &nodes, const char *filename)
@@ -86,6 +143,7 @@ void write_layout_svg(const graph &g, const std::vector<node> &nodes, const char
     begin_svg(f, nodes);
 
     write_svg_wires(f, g, nodes);
+    write_svg_nodes(f, nodes);
 
     end_svg(f);
     fclose(f);
