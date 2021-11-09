@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    xmlns:ev="http://www.w3.org/2001/xml-events"
+    version="1.1"
+    baseProfile="full"
+    viewBox="186 186 994 520">
+    <g>
+        <g>
+            <path fill="none" d="M 683 446 L 916 446" stroke="#000000" />
+        </g>
+        <g>
+            <path fill="none" d="M 1150 446 L 916 446" stroke="#000000" />
+        </g>
+        <g>
+            <path fill="none" d="M 566 446 L 683 446" stroke="#000000" />
+        </g>
+        <g>
+            <path fill="none" d="M 216 216 L 216 446" stroke="#000000" />
+        </g>
+        <g>
+            <path fill="none" d="M 683 216 L 216 216" stroke="#000000" />
+        </g>
+        <g>
+            <path fill="none" d="M 800 676 L 450 676" stroke="#000000" />
+        </g>
+        <g>
+            <path fill="none" d="M 450 446 L 566 446" stroke="#000000" />
+        </g>
+        <g>
+            <path fill="none" d="M 450 446 L 450 676" stroke="#000000" />
+        </g>
+        <g>
+            <path fill="none" d="M 216 676 L 450 676" stroke="#000000" />
+        </g>
+        <g>
+            <path fill="none" d="M 216 676 L 216 446" stroke="#000000" />
+        </g>
+        <g>
+            <path fill="none" d="M 1150 216 L 1150 446" stroke="#000000" />
+        </g>
+        <g>
+            <path fill="none" d="M 1150 216 L 683 216" stroke="#000000" />
+        </g>
+        <g>
+            <path fill="none" d="M 1150 676 L 1150 446" stroke="#000000" />
+        </g>
+        <g>
+            <path fill="none" d="M 1150 676 L 800 676" stroke="#000000" />
+        </g>
+    </g>
+</svg>
