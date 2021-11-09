@@ -152,7 +152,50 @@ void write_svg_component_node(FILE *f, const node &n)
         }
         //case component_type::L:
         //case component_type::C:
-        //case component_type::I:
+        case component_type::I:
+        {
+            constexpr int32_t R_outer = 18;
+            constexpr int32_t R = 15;
+            constexpr int32_t A = 8; // depends on arrow params defined in header
+            int32_t cx = n.x, cy = n.y;
+            int32_t lx1, lx2, ly1, ly2;
+            if (n.rotation == 0)
+            {
+                lx1 = n.x;
+                lx2 = n.x;
+                ly1 = n.y - A;
+                ly2 = n.y + A;
+            }
+            else if (n.rotation == 90)
+            {
+                lx1 = n.x + A;
+                lx2 = n.x - A;
+                ly1 = n.y;
+                ly2 = n.y;
+            }
+            else if (n.rotation == 180)
+            {
+                lx1 = n.x;
+                lx2 = n.x;
+                ly1 = n.y + A;
+                ly2 = n.y - A;
+            }
+            else // 270
+            {
+                lx1 = n.x - A;
+                lx2 = n.x + A;
+                ly1 = n.y;
+                ly2 = n.y;
+            }
+
+            fprintf(f, "    <g>\n"
+                       "        <circle cx=\"%d\" cy=\"%d\" r=\"%d\" style=\"fill:#ffffff;stroke:#000000;stroke-width:1\" />\n"
+                       "        <circle cx=\"%d\" cy=\"%d\" r=\"%d\" style=\"fill:#ffffff;stroke:#000000;stroke-width:1\" />\n"
+                       "        <line x1=\"%d\" y1=\"%d\" x2=\"%d\" y2=\"%d\" stroke=\"#000000\" stroke-width=\"1\" marker-end=\"url(#arrowhead)\" />"
+                       "    </g>\n",
+                       cx, cy, R_outer, cx, cy, R, lx1, ly1, lx2, ly2);
+            break;
+        }
         default:
             LOG_WARN("Type of node %s not yet implemented", n.name);
     }

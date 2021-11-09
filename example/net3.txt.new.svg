@@ -59,6 +59,10 @@
         </g>
     </g>
     <g>
+        <circle cx="450" cy="680" r="18" style="fill:#ffffff;stroke:#000000;stroke-width:1" />
+        <circle cx="450" cy="680" r="15" style="fill:#ffffff;stroke:#000000;stroke-width:1" />
+        <line x1="442" y1="680" x2="458" y2="680" stroke="#000000" stroke-width="1" marker-end="url(#arrowhead)" />    </g>
+    <g>
         <rect x="429" y="900" width="40" height="20" style="fill:#ffffff;stroke:#000000;stroke-width:1" />
     </g>
 </svg>
