@@ -6,6 +6,11 @@
     version="1.1"
     baseProfile="full"
     viewBox="186 186 1224 294">
+    <defs>
+        <marker id="arrowhead" markerWidth="8" markerHeight="8" refX="0" refY="4" orient="auto">
+        <polygon points="0 0, 4 4, 0 8" />
+        </marker>
+    </defs>
     <g>
         <g>
             <path fill="none" d="M 1380 450 L 1380 333" stroke="#000000" />
@@ -38,6 +43,9 @@
             <path fill="none" d="M 216 450 L 798 450" stroke="#000000" />
         </g>
     </g>
+    <g>
+        <circle cx="1380" cy="333" r="15" style="fill:#ffffff;stroke:#000000;stroke-width:1" />
+        <line x1="1380" y1="341" x2="1380" y2="325" stroke="#000000" stroke-width="1" marker-end="url(#arrowhead)" />    </g>
     <g>
         <rect x="896" y="206" width="40" height="20" style="fill:#ffffff;stroke:#000000;stroke-width:1" />
     </g>
