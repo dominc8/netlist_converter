@@ -1,0 +1,16 @@
+n = given component node
+
+works for rotation=0 (^)
+
+resistor.svg:
+    hardcoded width W=20
+    hardcoded height H=40
+    rect: x="n.x - W/2" y="n.y - H/2" width="W" height="H""
+    text: x="n.x + 2*W" y="n.y"
+
+voltage.svg:
+    hardcoded radius R=15
+    hardcoded arrow as in svg (about R/2) A=8
+    circle: cx="n.x" cy="n.y" r="R"
+    line: x1="n.x" y1="n.y + A" x2="n.x" y2="n.y - A"
+    text: x="n.x + 2*R" y="n.y"
