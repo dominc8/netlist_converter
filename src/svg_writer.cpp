@@ -351,14 +351,7 @@ void write_svg_true_dotpoints(FILE *f, const graph &g, const std::vector<node> &
         const auto &n = nodes[i];
         if (n.comp_type == component_type::DotPoint)
         {
-            int32_t n_neighbours = 0;
-            for (int32_t j = 0; j < g.n_node; ++j)
-            {
-                if (g.edge_of(i, j))
-                    ++n_neighbours;
-            }
-            LOG_INFO("Node %s at (%d, %d) has %d neighbours)", n.name, n.x, n.y, n_neighbours);
-            if (n_neighbours > 2)
+            if (g.count_neighbours(i) > 2)
             {
                 write_dotpoint(f, n.x, n.y);
             }

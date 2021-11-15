@@ -9,6 +9,7 @@ struct graph
     void deinit(void);
     uint8_t& edge_of(int32_t p0, int32_t p1);
     uint8_t edge_of(int32_t p0, int32_t p1) const;
+    int32_t count_neighbours(int32_t idx) const;
 
     uint8_t *matrix {nullptr};
     int32_t n_node {0};
