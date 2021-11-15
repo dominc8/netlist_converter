@@ -145,13 +145,57 @@ void write_svg_component_node(FILE *f, const node &n)
 
             fprintf(f, "    <g>\n"
                        "        <circle cx=\"%d\" cy=\"%d\" r=\"%d\" style=\"fill:#ffffff;stroke:#000000;stroke-width:1\" />\n"
-                       "        <line x1=\"%d\" y1=\"%d\" x2=\"%d\" y2=\"%d\" stroke=\"#000000\" stroke-width=\"1\" marker-end=\"url(#arrowhead)\" />"
+                       "        <line x1=\"%d\" y1=\"%d\" x2=\"%d\" y2=\"%d\" stroke=\"#000000\" stroke-width=\"1\" marker-end=\"url(#arrowhead)\" />\n"
                        "    </g>\n",
                        cx, cy, R, lx1, ly1, lx2, ly2);
             break;
         }
         //case component_type::L:
-        //case component_type::C:
+        case component_type::C:
+        {
+            constexpr int32_t W = 20;
+            constexpr int32_t L = 10;
+            int32_t x1[2], x2[2], y1[2], y2[2];
+            int32_t width, height;
+            if (n.rotation == 0)
+            {
+                width = W;
+                height = L;
+
+                x1[0] = n.x - W/2;
+                x1[1] = n.x - W/2;
+                x2[0] = n.x + W/2;
+                x2[1] = n.x + W/2;
+
+                y1[0] = n.y - L/2;
+                y1[1] = n.y + L/2;
+                y2[0] = n.y - L/2;
+                y2[1] = n.y + L/2;
+            }
+            else
+            {
+                width = L;
+                height = W;
+
+                x1[0] = n.x - L/2;
+                x1[1] = n.x + L/2;
+                x2[0] = n.x - L/2;
+                x2[1] = n.x + L/2;
+
+                y1[0] = n.y - W/2;
+                y1[1] = n.y - W/2;
+                y2[0] = n.y + W/2;
+                y2[1] = n.y + W/2;
+            }
+            fprintf(f, "    <g>\n"
+                       "        <rect x=\"%d\" y=\"%d\" width=\"%d\" height=\"%d\" style=\"fill:#ffffff\" />\n"
+                       "        <line x1=\"%d\" y1=\"%d\" x2=\"%d\" y2=\"%d\" stroke=\"#000000\" stroke-width=\"1\" />\n"
+                       "        <line x1=\"%d\" y1=\"%d\" x2=\"%d\" y2=\"%d\" stroke=\"#000000\" stroke-width=\"1\" />\n"
+                       "    </g>\n",
+                       x1[0], y1[0], width, height, 
+                       x1[0], y1[0], x2[0], y2[0], x1[1], y1[1], x2[1], y2[1]);
+            break;
+        }
         case component_type::I:
         {
             constexpr int32_t R_outer = 18;
@@ -191,7 +235,7 @@ void write_svg_component_node(FILE *f, const node &n)
             fprintf(f, "    <g>\n"
                        "        <circle cx=\"%d\" cy=\"%d\" r=\"%d\" style=\"fill:#ffffff;stroke:#000000;stroke-width:1\" />\n"
                        "        <circle cx=\"%d\" cy=\"%d\" r=\"%d\" style=\"fill:#ffffff;stroke:#000000;stroke-width:1\" />\n"
-                       "        <line x1=\"%d\" y1=\"%d\" x2=\"%d\" y2=\"%d\" stroke=\"#000000\" stroke-width=\"1\" marker-end=\"url(#arrowhead)\" />"
+                       "        <line x1=\"%d\" y1=\"%d\" x2=\"%d\" y2=\"%d\" stroke=\"#000000\" stroke-width=\"1\" marker-end=\"url(#arrowhead)\" />\n"
                        "    </g>\n",
                        cx, cy, R_outer, cx, cy, R, lx1, ly1, lx2, ly2);
             break;

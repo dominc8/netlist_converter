@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    xmlns:ev="http://www.w3.org/2001/xml-events"
+    version="1.1"
+    baseProfile="full"
+    viewBox="200 212.5 262 241">
+	<g>
+        <rect x="206" y="241" width="20" height="10" style="fill:#ffffff" />
+        <line x1="206" y1="241" x2="226" y2="241" stroke="#000000" stroke-width="1" />
+        <line x1="206" y1="251" x2="226" y2="251" stroke="#000000" stroke-width="1" />
+		<text x="241" y="238" text-anchor="middle" dominant-baseline="middle" font-family="Arial" font-size="16" fill="#000000">C1</text>
+	</g>
+</svg>

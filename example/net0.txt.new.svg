@@ -33,7 +33,8 @@
     </g>
     <g>
         <circle cx="446" cy="333" r="15" style="fill:#ffffff;stroke:#000000;stroke-width:1" />
-        <line x1="446" y1="341" x2="446" y2="325" stroke="#000000" stroke-width="1" marker-end="url(#arrowhead)" />    </g>
+        <line x1="446" y1="341" x2="446" y2="325" stroke="#000000" stroke-width="1" marker-end="url(#arrowhead)" />
+    </g>
     <g>
         <rect x="206" y="313" width="20" height="40" style="fill:#ffffff;stroke:#000000;stroke-width:1" />
     </g>
