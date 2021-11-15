@@ -301,6 +301,15 @@ void write_svg_component_node(FILE *f, const node &n)
     }
 }
 
+void write_dotpoint(FILE *f, int32_t x, int32_t y)
+{
+    constexpr int32_t R = 2;
+    fprintf(f, "    <g>\n"
+               "        <circle cx=\"%d\" cy=\"%d\" r=\"%d\" style=\"fill:#000000\" />\n"
+               "    </g>\n",
+               x, y, R);
+}
+
 void write_svg_ground_node(FILE *f, const node &n)
 {
     constexpr int32_t offset = 20;
@@ -317,6 +326,7 @@ void write_svg_ground_node(FILE *f, const node &n)
                -W/2, L,
                -W/2, -L,
                W/2);
+    write_dotpoint(f, n.x, n.y);
 }
 
 void write_svg_nodes(FILE *f, const std::vector<node> &nodes)
@@ -330,6 +340,28 @@ void write_svg_nodes(FILE *f, const std::vector<node> &nodes)
         else if (n.comp_type == component_type::Ground)
         {
             write_svg_ground_node(f, n);
+        }
+    }
+}
+
+void write_svg_true_dotpoints(FILE *f, const graph &g, const std::vector<node> &nodes)
+{
+    for (int32_t i = 0; i < g.n_node; ++i)
+    {
+        const auto &n = nodes[i];
+        if (n.comp_type == component_type::DotPoint)
+        {
+            int32_t n_neighbours = 0;
+            for (int32_t j = 0; j < g.n_node; ++j)
+            {
+                if (g.edge_of(i, j))
+                    ++n_neighbours;
+            }
+            LOG_INFO("Node %s at (%d, %d) has %d neighbours)", n.name, n.x, n.y, n_neighbours);
+            if (n_neighbours > 2)
+            {
+                write_dotpoint(f, n.x, n.y);
+            }
         }
     }
 }
@@ -349,6 +381,7 @@ void write_layout_svg(const graph &g, const std::vector<node> &nodes, const char
 
     write_svg_wires(f, g, nodes);
     write_svg_nodes(f, nodes);
+    write_svg_true_dotpoints(f, g, nodes);
 
     end_svg(f);
     fclose(f);

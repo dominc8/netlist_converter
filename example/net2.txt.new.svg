@@ -64,6 +64,9 @@
         <path d="M 1170,466 h 10 l -10,10 l -10,-10 h 10" style="fill:#000000;stroke:#000000;stroke-width:1" />
     </g>
     <g>
+        <circle cx="1150" cy="446" r="2" style="fill:#000000" />
+    </g>
+    <g>
         <rect x="546" y="436" width="40" height="20" style="fill:#ffffff;stroke:#000000;stroke-width:1" />
     </g>
     <g>
@@ -79,5 +82,8 @@
         <rect x="795" y="666" width="10" height="20" style="fill:#ffffff" />
         <line x1="795" y1="666" x2="795" y2="686" stroke="#000000" stroke-width="1" />
         <line x1="805" y1="666" x2="805" y2="686" stroke="#000000" stroke-width="1" />
+    </g>
+    <g>
+        <circle cx="450" cy="676" r="2" style="fill:#000000" />
     </g>
 </svg>
