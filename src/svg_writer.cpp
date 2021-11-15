@@ -303,6 +303,20 @@ void write_svg_component_node(FILE *f, const node &n)
 
 void write_svg_ground_node(FILE *f, const node &n)
 {
+    constexpr int32_t offset = 20;
+    constexpr int32_t W = 20;
+    constexpr int32_t L = 10;
+    fprintf(f, "    <g>\n"
+               "        <path d=\"M %d,%d h %d v %d\" style=\"fill:#ffffff;stroke:#000000;stroke-width:1\" />\n"
+               "        <path d=\"M %d,%d h %d l %d,%d l %d,%d h %d\" style=\"fill:#000000;stroke:#000000;stroke-width:1\" />\n"
+               "    </g>\n",
+               n.x, n.y,
+               offset, offset,
+               n.x + offset, n.y + offset,
+               W/2,
+               -W/2, L,
+               -W/2, -L,
+               W/2);
 }
 
 void write_svg_nodes(FILE *f, const std::vector<node> &nodes)
