@@ -68,6 +68,10 @@
         <line x1="206" y1="451" x2="226" y2="451" stroke="#000000" stroke-width="1" />
     </g>
     <g>
+        <rect x="665" y="212" width="36" height="12" style="fill:#ffffff" />
+        <path d="M 665,216 C 669,224 673,224 677,216 C 681,224 685,224 689,216 C 693,224 697,224 701,216 " style="fill:#ffffff;stroke:#000000;stroke-width:1" />
+    </g>
+    <g>
         <rect x="795" y="666" width="10" height="20" style="fill:#ffffff" />
         <line x1="795" y1="666" x2="795" y2="686" stroke="#000000" stroke-width="1" />
         <line x1="805" y1="666" x2="805" y2="686" stroke="#000000" stroke-width="1" />

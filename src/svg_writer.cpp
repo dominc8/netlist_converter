@@ -150,7 +150,63 @@ void write_svg_component_node(FILE *f, const node &n)
                        cx, cy, R, lx1, ly1, lx2, ly2);
             break;
         }
-        //case component_type::L:
+        case component_type::L:
+        {
+            constexpr int32_t n_arc = 3;
+            constexpr int32_t W = 12; // single arc width
+            constexpr int32_t L = 8; // arc amplitude
+            int32_t x[4], y[4];
+            int32_t x_offset, y_offset;
+            int32_t x0, y0, width, height;
+
+            if (n.rotation == 0)
+            {
+                x_offset = 0;
+                y_offset = W;
+
+                x[0] = n.x;
+                y[0] = n.y - n_arc * W / 2;
+                x[1] = n.x + L;
+                y[1] = y[0] + W/3;
+                x[2] = n.x + L;
+                y[2] = y[0] + (W - W/3);
+                x[3] = n.x;
+                y[3] = y[0] + W;
+
+                x0 = n.x - L/2;
+                y0 = y[0];
+                width = 3 * L / 2;
+                height = n_arc * W;
+            }
+            else
+            {
+                x_offset = W;
+                y_offset = 0;
+
+                x[0] = n.x - n_arc * W / 2;
+                y[0] = n.y;
+                x[1] = x[0] + W/3;
+                y[1] = n.y + L;
+                x[2] = x[0] + (W - W/3);
+                y[2] = n.y + L;
+                x[3] = x[0] + W;
+                y[3] = n.y;
+
+                x0 = x[0];
+                y0 = n.y - L/2;
+                width = n_arc * W;
+                height = 3 * L / 2;
+            }
+            fprintf(f, "    <g>\n"
+                       "        <rect x=\"%d\" y=\"%d\" width=\"%d\" height=\"%d\" style=\"fill:#ffffff\" />\n"
+                       "        <path d=\"M %d,%d C %d,%d %d,%d %d,%d C %d,%d %d,%d %d,%d C %d,%d %d,%d %d,%d \" style=\"fill:#ffffff;stroke:#000000;stroke-width:1\" />\n"
+                       "    </g>\n",
+                       x0, y0, width, height,
+                       x[0], y[0], x[1], y[1], x[2], y[2], x[3], y[3],
+                       x[1] + x_offset, y[1] + y_offset, x[2] + x_offset, y[2] + y_offset, x[3] + x_offset, y[3] + y_offset,
+                       x[1] + 2*x_offset, y[1] + 2*y_offset, x[2] + 2*x_offset, y[2] + 2*y_offset, x[3] + 2*x_offset, y[3] + 2*y_offset);
+            break;
+        }
         case component_type::C:
         {
             constexpr int32_t W = 20;
