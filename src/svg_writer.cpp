@@ -166,7 +166,7 @@ void write_svg_component_node(FILE *f, const node &n)
                 text_x[0] = cx;
                 text_y[0] = cy - R - label_dist;
                 text_x[1] = text_x[0];
-                text_y[1] = cy + R + label_dist + font_size;
+                text_y[1] = cy + R + font_size;
                 text_style = "hori";
             }
             else if (n.rotation == 180)
@@ -190,7 +190,7 @@ void write_svg_component_node(FILE *f, const node &n)
                 text_x[0] = cx;
                 text_y[0] = cy - R - label_dist;
                 text_x[1] = text_x[0];
-                text_y[1] = cy + R + label_dist + font_size;
+                text_y[1] = cy + R + font_size;
                 text_style = "hori";
             }
 
@@ -362,7 +362,7 @@ void write_svg_component_node(FILE *f, const node &n)
                 text_x[0] = cx;
                 text_y[0] = cy - R_outer - label_dist;
                 text_x[1] = text_x[0];
-                text_y[1] = cy + R_outer + label_dist + font_size;
+                text_y[1] = cy + R_outer + font_size;
                 text_style = "hori";
             }
             else if (n.rotation == 180)
@@ -386,7 +386,7 @@ void write_svg_component_node(FILE *f, const node &n)
                 text_x[0] = cx;
                 text_y[0] = cy - R_outer - label_dist;
                 text_x[1] = text_x[0];
-                text_y[1] = cy + R_outer + label_dist + font_size;
+                text_y[1] = cy + R_outer + font_size;
                 text_style = "hori";
             }
 

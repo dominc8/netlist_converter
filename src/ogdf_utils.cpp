@@ -133,7 +133,7 @@ void ogdf_layout(graph &g, std::vector<node> &nodes)
     pl.setPlanarLayouter(ol);
 
     pl.call(GA);
-    GA.scale(10);
+    GA.scale(4);
 
     ogdf::Array<ogdf::NodeElement*> arr;
 
