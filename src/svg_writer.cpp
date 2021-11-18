@@ -248,7 +248,7 @@ void write_svg_component_node(FILE *f, const node &n)
                        "        <line x1=\"%d\" y1=\"%d\" x2=\"%d\" y2=\"%d\" stroke=\"#000000\" stroke-width=\"1\" />\n"
                        "        <line x1=\"%d\" y1=\"%d\" x2=\"%d\" y2=\"%d\" stroke=\"#000000\" stroke-width=\"1\" />\n"
                        "    </g>\n",
-                       x1[0], y1[0], width, height, 
+                       x1[0], y1[0], width, height,
                        x1[0], y1[0], x2[0], y2[0], x1[1], y1[1], x2[1], y2[1]);
             break;
         }
@@ -363,7 +363,7 @@ void write_svg_true_dotpoints(FILE *f, const graph &g, const std::vector<node> &
 void write_layout_svg(const graph &g, const std::vector<node> &nodes, const char *filename)
 {
     std::string s(filename);
-    s.append(".new.svg");
+    s.append(".svg");
     FILE *f = fopen(s.c_str(), "w");
     if (f == nullptr)
     {

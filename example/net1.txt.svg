@@ -1,75 +1,69 @@
 <?xml version="1.0"?>
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ev="http://www.w3.org/2001/xml-events" version="1.1" baseProfile="full" viewBox="212.5 200 1183.5 266">
-	<g>
-		<g>
-			<path fill="none" d=" M1380,450 L1380,333" stroke="#000000" />
-		</g>
-		<g>
-			<path fill="none" d=" M916,216 L1150,216" stroke="#000000" />
-		</g>
-		<g>
-			<path fill="none" d=" M683,216 L916,216" stroke="#000000" />
-		</g>
-		<g>
-			<path fill="none" d=" M449,216 L683,216" stroke="#000000" />
-		</g>
-		<g>
-			<path fill="none" d=" M216,216 L449,216" stroke="#000000" />
-		</g>
-		<g>
-			<path fill="none" d=" M798,450 L1380,450" stroke="#000000" />
-		</g>
-		<g>
-			<path fill="none" d=" M1380,216 L1380,333" stroke="#000000" />
-		</g>
-		<g>
-			<path fill="none" d=" M1380,216 L1150,216" stroke="#000000" />
-		</g>
-		<g>
-			<path fill="none" d=" M216,450 L216,216" stroke="#000000" />
-		</g>
-		<g>
-			<path fill="none" d=" M216,450 L798,450" stroke="#000000" />
-		</g>
-	</g>
-	<g>
-		<rect x="1365" y="318" width="30" height="30" />
-		<text x="1355" y="358" text-anchor="middle" dominant-baseline="middle" font-family="Arial" font-size="16" fill="#000000">V1</text>
-	</g>
-	<g>
-		<rect x="1147.5" y="213.5" width="5" height="5" />
-		<text x="1175" y="241" text-anchor="middle" dominant-baseline="middle" font-family="Arial" font-size="16" fill="#000000">r</text>
-	</g>
-	<g>
-		<rect x="1377.5" y="447.5" width="5" height="5" />
-		<text x="1355" y="425" text-anchor="middle" dominant-baseline="middle" font-family="Arial" font-size="16" fill="#000000">0</text>
-	</g>
-	<g>
-		<rect x="901" y="201" width="30" height="30" />
-		<text x="941" y="241" text-anchor="middle" dominant-baseline="middle" font-family="Arial" font-size="16" fill="#000000">R1</text>
-	</g>
-	<g>
-		<rect x="680.5" y="213.5" width="5" height="5" />
-		<text x="708" y="241" text-anchor="middle" dominant-baseline="middle" font-family="Arial" font-size="16" fill="#000000">c</text>
-	</g>
-	<g>
-		<rect x="434" y="201" width="30" height="30" />
-		<text x="474" y="241" text-anchor="middle" dominant-baseline="middle" font-family="Arial" font-size="16" fill="#000000">C1</text>
-	</g>
-	<g>
-		<rect x="213.5" y="213.5" width="5" height="5" />
-		<text x="241" y="241" text-anchor="middle" dominant-baseline="middle" font-family="Arial" font-size="16" fill="#000000">l</text>
-	</g>
-	<g>
-		<rect x="783" y="435" width="30" height="30" />
-		<text x="823" y="425" text-anchor="middle" dominant-baseline="middle" font-family="Arial" font-size="16" fill="#000000">L1</text>
-	</g>
-	<g>
-		<rect x="1377.5" y="213.5" width="5" height="5" />
-		<text x="1355" y="241" text-anchor="middle" dominant-baseline="middle" font-family="Arial" font-size="16" fill="#000000">n8</text>
-	</g>
-	<g>
-		<rect x="213.5" y="447.5" width="5" height="5" />
-		<text x="241" y="425" text-anchor="middle" dominant-baseline="middle" font-family="Arial" font-size="16" fill="#000000">n9</text>
-	</g>
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    xmlns:ev="http://www.w3.org/2001/xml-events"
+    version="1.1"
+    baseProfile="full"
+    viewBox="186 186 1224 294">
+    <defs>
+        <marker id="arrowhead" markerWidth="8" markerHeight="8" refX="0" refY="4" orient="auto">
+        <polygon points="0 0, 4 4, 0 8" />
+        </marker>
+    </defs>
+    <g>
+        <g>
+            <path fill="none" d="M 1380 450 L 1380 333" stroke="#000000" />
+        </g>
+        <g>
+            <path fill="none" d="M 916 216 L 1150 216" stroke="#000000" />
+        </g>
+        <g>
+            <path fill="none" d="M 683 216 L 916 216" stroke="#000000" />
+        </g>
+        <g>
+            <path fill="none" d="M 449 216 L 683 216" stroke="#000000" />
+        </g>
+        <g>
+            <path fill="none" d="M 216 216 L 449 216" stroke="#000000" />
+        </g>
+        <g>
+            <path fill="none" d="M 798 450 L 1380 450" stroke="#000000" />
+        </g>
+        <g>
+            <path fill="none" d="M 1380 216 L 1380 333" stroke="#000000" />
+        </g>
+        <g>
+            <path fill="none" d="M 1380 216 L 1150 216" stroke="#000000" />
+        </g>
+        <g>
+            <path fill="none" d="M 216 450 L 216 216" stroke="#000000" />
+        </g>
+        <g>
+            <path fill="none" d="M 216 450 L 798 450" stroke="#000000" />
+        </g>
+    </g>
+    <g>
+        <circle cx="1380" cy="333" r="15" style="fill:#ffffff;stroke:#000000;stroke-width:1" />
+        <line x1="1380" y1="341" x2="1380" y2="325" stroke="#000000" stroke-width="1" marker-end="url(#arrowhead)" />
+    </g>
+    <g>
+        <path d="M 1380,450 h 20 v 20" style="fill:#ffffff;stroke:#000000;stroke-width:1" />
+        <path d="M 1400,470 h 10 l -10,10 l -10,-10 h 10" style="fill:#000000;stroke:#000000;stroke-width:1" />
+    </g>
+    <g>
+        <circle cx="1380" cy="450" r="2" style="fill:#000000" />
+    </g>
+    <g>
+        <rect x="896" y="206" width="40" height="20" style="fill:#ffffff;stroke:#000000;stroke-width:1" />
+    </g>
+    <g>
+        <rect x="444" y="206" width="10" height="20" style="fill:#ffffff" />
+        <line x1="444" y1="206" x2="444" y2="226" stroke="#000000" stroke-width="1" />
+        <line x1="454" y1="206" x2="454" y2="226" stroke="#000000" stroke-width="1" />
+    </g>
+    <g>
+        <rect x="780" y="446" width="36" height="12" style="fill:#ffffff" />
+        <path d="M 780,450 C 784,458 788,458 792,450 C 796,458 800,458 804,450 C 808,458 812,458 816,450 " style="fill:#ffffff;stroke:#000000;stroke-width:1" />
+    </g>
 </svg>
