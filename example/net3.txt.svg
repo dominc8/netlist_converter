@@ -67,6 +67,7 @@
         <circle cx="450" cy="680" r="15" style="fill:#ffffff;stroke:#000000;stroke-width:1" />
         <line x1="442" y1="680" x2="458" y2="680" stroke="#000000" stroke-width="1" marker-end="url(#arrowhead)" />
         <text x="450" y="657" class="hori">I1</text>
+        <text x="450" y="719" class="hori">1</text>
     </g>
     <g>
         <path d="M 683,680 h 20 v 20" style="fill:#ffffff;stroke:#000000;stroke-width:1" />
@@ -85,17 +86,20 @@
         <line x1="444" y1="206" x2="444" y2="226" stroke="#000000" stroke-width="1" />
         <line x1="454" y1="206" x2="454" y2="226" stroke="#000000" stroke-width="1" />
         <text x="449" y="201" class="hori">C1</text>
+        <text x="449" y="247" class="hori">10n</text>
     </g>
     <g>
         <rect x="679" y="432" width="12" height="36" style="fill:#ffffff" />
         <path d="M 683,432 C 691,436 691,440 683,444 C 691,448 691,452 683,456 C 691,460 691,464 683,468 " style="fill:#ffffff;stroke:#000000;stroke-width:1" />
         <text x="696" y="450" class="vert">L1</text>
+        <text x="696" y="466" class="vert">5.3</text>
     </g>
     <g>
         <rect x="906" y="443" width="20" height="10" style="fill:#ffffff" />
         <line x1="906" y1="443" x2="926" y2="443" stroke="#000000" stroke-width="1" />
         <line x1="906" y1="453" x2="926" y2="453" stroke="#000000" stroke-width="1" />
         <text x="931" y="448" class="vert">C2</text>
+        <text x="931" y="464" class="vert">20n</text>
     </g>
     <g>
         <circle cx="216" cy="680" r="2" style="fill:#000000" />

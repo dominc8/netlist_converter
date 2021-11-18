@@ -39,6 +39,7 @@
         <circle cx="446" cy="333" r="15" style="fill:#ffffff;stroke:#000000;stroke-width:1" />
         <line x1="446" y1="341" x2="446" y2="325" stroke="#000000" stroke-width="1" marker-end="url(#arrowhead)" />
         <text x="466" y="333" class="vert">V1</text>
+        <text x="466" y="349" class="vert">1</text>
     </g>
     <g>
         <path d="M 446,450 h 20 v 20" style="fill:#ffffff;stroke:#000000;stroke-width:1" />
