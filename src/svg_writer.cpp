@@ -22,8 +22,8 @@ void begin_svg(FILE *f, const std::vector<node> &nodes)
 
     int32_t dx = max_x - min_x;
     int32_t dy = max_y - min_y;
-    int32_t x_border = 30;
-    int32_t y_border = 30;
+    int32_t x_border = 40;
+    int32_t y_border = 40;
 
 
     int32_t width = dx + 2 * x_border;
@@ -38,7 +38,11 @@ void begin_svg(FILE *f, const std::vector<node> &nodes)
             "    xmlns:ev=\"http://www.w3.org/2001/xml-events\"\n"
             "    version=\"1.1\"\n"
             "    baseProfile=\"full\"\n"
-            "    viewBox=\"%d %d %d %d\">\n",
+            "    viewBox=\"%d %d %d %d\">\n"
+            "    <style>\n"
+            "        .vert { font-size: 16; fill: #000000; dominant-baseline: middle }\n"
+            "        .hori { font-size: 16; fill: #000000; text-anchor: middle }\n"
+            "    </style>\n",
             x0, y0, width, height
            );
 
@@ -81,6 +85,9 @@ void write_svg_wires(FILE *f, const graph &g, const std::vector<node> &nodes)
 
 void write_svg_component_node(FILE *f, const node &n)
 {
+    constexpr int32_t label_dist = 5;
+    const char* text_style;
+
     switch(n.comp_type)
     {
         case component_type::R:
@@ -88,12 +95,16 @@ void write_svg_component_node(FILE *f, const node &n)
             constexpr int32_t W = 20;
             constexpr int32_t L = 40;
             int32_t rect_x, rect_y, rect_w, rect_h;
+            int32_t text_x, text_y;
             if (n.rotation == 0)
             {
                 rect_x = n.x - W/2;
                 rect_y = n.y - L/2;
                 rect_w = W;
                 rect_h = L;
+                text_x = n.x + W/2 + label_dist;
+                text_y = n.y;
+                text_style = "vert";
             }
             else
             {
@@ -101,11 +112,17 @@ void write_svg_component_node(FILE *f, const node &n)
                 rect_y = n.y - W/2;
                 rect_w = L;
                 rect_h = W;
+                text_x = n.x;
+                text_y = n.y - W/2 - label_dist;
+                text_style = "hori";
             }
+
             fprintf(f, "    <g>\n"
                        "        <rect x=\"%d\" y=\"%d\" width=\"%d\" height=\"%d\" style=\"fill:#ffffff;stroke:#000000;stroke-width:1\" />\n"
+                       "        <text x=\"%d\" y=\"%d\" class=\"%s\">%s</text>\n"
                        "    </g>\n",
-                       rect_x, rect_y, rect_w, rect_h);
+                       rect_x, rect_y, rect_w, rect_h,
+                       text_x, text_y, text_style, n.name);
             break;
         }
         case component_type::V:
@@ -114,12 +131,16 @@ void write_svg_component_node(FILE *f, const node &n)
             constexpr int32_t A = 8; // depends on arrow params defined in header
             int32_t cx = n.x, cy = n.y;
             int32_t lx1, lx2, ly1, ly2;
+            int32_t text_x, text_y;
             if (n.rotation == 0)
             {
                 lx1 = n.x;
                 lx2 = n.x;
                 ly1 = n.y + A;
                 ly2 = n.y - A;
+                text_x = cx + R + label_dist;
+                text_y = cy;
+                text_style = "vert";
             }
             else if (n.rotation == 90)
             {
@@ -127,6 +148,9 @@ void write_svg_component_node(FILE *f, const node &n)
                 lx2 = n.x + A;
                 ly1 = n.y;
                 ly2 = n.y;
+                text_x = cx;
+                text_y = cy - R - label_dist;
+                text_style = "hori";
             }
             else if (n.rotation == 180)
             {
@@ -134,6 +158,9 @@ void write_svg_component_node(FILE *f, const node &n)
                 lx2 = n.x;
                 ly1 = n.y - A;
                 ly2 = n.y + A;
+                text_x = cx + R + label_dist;
+                text_y = cy;
+                text_style = "vert";
             }
             else // 270
             {
@@ -141,13 +168,19 @@ void write_svg_component_node(FILE *f, const node &n)
                 lx2 = n.x - A;
                 ly1 = n.y;
                 ly2 = n.y;
+                text_x = cx;
+                text_y = cy - R - label_dist;
+                text_style = "hori";
             }
 
             fprintf(f, "    <g>\n"
                        "        <circle cx=\"%d\" cy=\"%d\" r=\"%d\" style=\"fill:#ffffff;stroke:#000000;stroke-width:1\" />\n"
                        "        <line x1=\"%d\" y1=\"%d\" x2=\"%d\" y2=\"%d\" stroke=\"#000000\" stroke-width=\"1\" marker-end=\"url(#arrowhead)\" />\n"
+                       "        <text x=\"%d\" y=\"%d\" class=\"%s\">%s</text>\n"
                        "    </g>\n",
-                       cx, cy, R, lx1, ly1, lx2, ly2);
+                       cx, cy, R,
+                       lx1, ly1, lx2, ly2,
+                       text_x, text_y, text_style, n.name);
             break;
         }
         case component_type::L:
@@ -158,6 +191,7 @@ void write_svg_component_node(FILE *f, const node &n)
             int32_t x[4], y[4];
             int32_t x_offset, y_offset;
             int32_t x0, y0, width, height;
+            int32_t text_x, text_y;
 
             if (n.rotation == 0)
             {
@@ -177,6 +211,9 @@ void write_svg_component_node(FILE *f, const node &n)
                 y0 = y[0];
                 width = 3 * L / 2;
                 height = n_arc * W;
+                text_x = n.x + L + label_dist;
+                text_y = n.y;
+                text_style = "vert";
             }
             else
             {
@@ -196,15 +233,21 @@ void write_svg_component_node(FILE *f, const node &n)
                 y0 = n.y - L/2;
                 width = n_arc * W;
                 height = 3 * L / 2;
+                text_x = n.x;
+                text_y = n.y - label_dist;
+                text_style = "hori";
             }
+
             fprintf(f, "    <g>\n"
                        "        <rect x=\"%d\" y=\"%d\" width=\"%d\" height=\"%d\" style=\"fill:#ffffff\" />\n"
                        "        <path d=\"M %d,%d C %d,%d %d,%d %d,%d C %d,%d %d,%d %d,%d C %d,%d %d,%d %d,%d \" style=\"fill:#ffffff;stroke:#000000;stroke-width:1\" />\n"
+                       "        <text x=\"%d\" y=\"%d\" class=\"%s\">%s</text>\n"
                        "    </g>\n",
                        x0, y0, width, height,
                        x[0], y[0], x[1], y[1], x[2], y[2], x[3], y[3],
                        x[1] + x_offset, y[1] + y_offset, x[2] + x_offset, y[2] + y_offset, x[3] + x_offset, y[3] + y_offset,
-                       x[1] + 2*x_offset, y[1] + 2*y_offset, x[2] + 2*x_offset, y[2] + 2*y_offset, x[3] + 2*x_offset, y[3] + 2*y_offset);
+                       x[1] + 2*x_offset, y[1] + 2*y_offset, x[2] + 2*x_offset, y[2] + 2*y_offset, x[3] + 2*x_offset, y[3] + 2*y_offset,
+                       text_x, text_y, text_style, n.name);
             break;
         }
         case component_type::C:
@@ -213,6 +256,7 @@ void write_svg_component_node(FILE *f, const node &n)
             constexpr int32_t L = 10;
             int32_t x1[2], x2[2], y1[2], y2[2];
             int32_t width, height;
+            int32_t text_x, text_y;
             if (n.rotation == 0)
             {
                 width = W;
@@ -227,6 +271,9 @@ void write_svg_component_node(FILE *f, const node &n)
                 y1[1] = n.y + L/2;
                 y2[0] = n.y - L/2;
                 y2[1] = n.y + L/2;
+                text_x = n.x + W/2 + label_dist;
+                text_y = n.y;
+                text_style = "vert";
             }
             else
             {
@@ -242,14 +289,19 @@ void write_svg_component_node(FILE *f, const node &n)
                 y1[1] = n.y - W/2;
                 y2[0] = n.y + W/2;
                 y2[1] = n.y + W/2;
+                text_x = n.x;
+                text_y = n.y - W/2 - label_dist;
+                text_style = "hori";
             }
             fprintf(f, "    <g>\n"
                        "        <rect x=\"%d\" y=\"%d\" width=\"%d\" height=\"%d\" style=\"fill:#ffffff\" />\n"
                        "        <line x1=\"%d\" y1=\"%d\" x2=\"%d\" y2=\"%d\" stroke=\"#000000\" stroke-width=\"1\" />\n"
                        "        <line x1=\"%d\" y1=\"%d\" x2=\"%d\" y2=\"%d\" stroke=\"#000000\" stroke-width=\"1\" />\n"
+                       "        <text x=\"%d\" y=\"%d\" class=\"%s\">%s</text>\n"
                        "    </g>\n",
                        x1[0], y1[0], width, height,
-                       x1[0], y1[0], x2[0], y2[0], x1[1], y1[1], x2[1], y2[1]);
+                       x1[0], y1[0], x2[0], y2[0], x1[1], y1[1], x2[1], y2[1],
+                       text_x, text_y, text_style, n.name);
             break;
         }
         case component_type::I:
@@ -259,12 +311,16 @@ void write_svg_component_node(FILE *f, const node &n)
             constexpr int32_t A = 8; // depends on arrow params defined in header
             int32_t cx = n.x, cy = n.y;
             int32_t lx1, lx2, ly1, ly2;
+            int32_t text_x, text_y;
             if (n.rotation == 0)
             {
                 lx1 = n.x;
                 lx2 = n.x;
                 ly1 = n.y - A;
                 ly2 = n.y + A;
+                text_x = cx + R_outer + label_dist;
+                text_y = cy;
+                text_style = "vert";
             }
             else if (n.rotation == 90)
             {
@@ -272,6 +328,9 @@ void write_svg_component_node(FILE *f, const node &n)
                 lx2 = n.x - A;
                 ly1 = n.y;
                 ly2 = n.y;
+                text_x = cx;
+                text_y = cy - R_outer - label_dist;
+                text_style = "hori";
             }
             else if (n.rotation == 180)
             {
@@ -279,6 +338,9 @@ void write_svg_component_node(FILE *f, const node &n)
                 lx2 = n.x;
                 ly1 = n.y + A;
                 ly2 = n.y - A;
+                text_x = cx + R_outer + label_dist;
+                text_y = cy;
+                text_style = "vert";
             }
             else // 270
             {
@@ -286,14 +348,19 @@ void write_svg_component_node(FILE *f, const node &n)
                 lx2 = n.x + A;
                 ly1 = n.y;
                 ly2 = n.y;
+                text_x = cx;
+                text_y = cy - R_outer - label_dist;
+                text_style = "hori";
             }
 
             fprintf(f, "    <g>\n"
                        "        <circle cx=\"%d\" cy=\"%d\" r=\"%d\" style=\"fill:#ffffff;stroke:#000000;stroke-width:1\" />\n"
                        "        <circle cx=\"%d\" cy=\"%d\" r=\"%d\" style=\"fill:#ffffff;stroke:#000000;stroke-width:1\" />\n"
                        "        <line x1=\"%d\" y1=\"%d\" x2=\"%d\" y2=\"%d\" stroke=\"#000000\" stroke-width=\"1\" marker-end=\"url(#arrowhead)\" />\n"
+                       "        <text x=\"%d\" y=\"%d\" class=\"%s\">%s</text>\n"
                        "    </g>\n",
-                       cx, cy, R_outer, cx, cy, R, lx1, ly1, lx2, ly2);
+                       cx, cy, R_outer, cx, cy, R, lx1, ly1, lx2, ly2,
+                       text_x, text_y, text_style, n.name);
             break;
         }
         default:

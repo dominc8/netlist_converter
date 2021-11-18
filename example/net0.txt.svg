@@ -5,7 +5,11 @@
     xmlns:ev="http://www.w3.org/2001/xml-events"
     version="1.1"
     baseProfile="full"
-    viewBox="186 186 290 294">
+    viewBox="176 176 310 314">
+    <style>
+        .vert { font-size: 16; fill: #000000; dominant-baseline: middle }
+        .hori { font-size: 16; fill: #000000; text-anchor: middle }
+    </style>
     <defs>
         <marker id="arrowhead" markerWidth="8" markerHeight="8" refX="0" refY="4" orient="auto">
         <polygon points="0 0, 4 4, 0 8" />
@@ -34,6 +38,7 @@
     <g>
         <circle cx="446" cy="333" r="15" style="fill:#ffffff;stroke:#000000;stroke-width:1" />
         <line x1="446" y1="341" x2="446" y2="325" stroke="#000000" stroke-width="1" marker-end="url(#arrowhead)" />
+        <text x="466" y="333" class="vert">V1</text>
     </g>
     <g>
         <path d="M 446,450 h 20 v 20" style="fill:#ffffff;stroke:#000000;stroke-width:1" />
@@ -44,5 +49,6 @@
     </g>
     <g>
         <rect x="206" y="313" width="20" height="40" style="fill:#ffffff;stroke:#000000;stroke-width:1" />
+        <text x="231" y="333" class="vert">R1</text>
     </g>
 </svg>
