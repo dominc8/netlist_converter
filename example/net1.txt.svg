@@ -62,6 +62,7 @@
     <g>
         <rect x="896" y="206" width="40" height="20" style="fill:#ffffff;stroke:#000000;stroke-width:1" />
         <text x="916" y="201" class="hori">R1</text>
+        <text x="916" y="247" class="hori">10k</text>
     </g>
     <g>
         <rect x="444" y="206" width="10" height="20" style="fill:#ffffff" />

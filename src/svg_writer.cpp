@@ -5,6 +5,8 @@
 
 namespace
 {
+constexpr int32_t font_size = 16;
+
 void begin_svg(FILE *f, const std::vector<node> &nodes)
 {
     int32_t min_x = nodes[0].x;
@@ -40,10 +42,11 @@ void begin_svg(FILE *f, const std::vector<node> &nodes)
             "    baseProfile=\"full\"\n"
             "    viewBox=\"%d %d %d %d\">\n"
             "    <style>\n"
-            "        .vert { font-size: 16; fill: #000000; dominant-baseline: middle }\n"
-            "        .hori { font-size: 16; fill: #000000; text-anchor: middle }\n"
+            "        .vert { font-size: %d; fill: #000000; dominant-baseline: middle }\n"
+            "        .hori { font-size: %d; fill: #000000; text-anchor: middle }\n"
             "    </style>\n",
-            x0, y0, width, height
+            x0, y0, width, height,
+            font_size, font_size
            );
 
     // for drawing arrows in voltage sources
@@ -83,6 +86,12 @@ void write_svg_wires(FILE *f, const graph &g, const std::vector<node> &nodes)
     fprintf(f, "    </g>\n");
 }
 
+void write_svg_text(FILE *f, int32_t x, int32_t y, const char *style, const char *text)
+{
+    fprintf(f, "        <text x=\"%d\" y=\"%d\" class=\"%s\">%s</text>\n",
+               x, y, style, text);
+}
+
 void write_svg_component_node(FILE *f, const node &n)
 {
     constexpr int32_t label_dist = 5;
@@ -95,15 +104,17 @@ void write_svg_component_node(FILE *f, const node &n)
             constexpr int32_t W = 20;
             constexpr int32_t L = 40;
             int32_t rect_x, rect_y, rect_w, rect_h;
-            int32_t text_x, text_y;
+            int32_t text_x[2], text_y[2];
             if (n.rotation == 0)
             {
                 rect_x = n.x - W/2;
                 rect_y = n.y - L/2;
                 rect_w = W;
                 rect_h = L;
-                text_x = n.x + W/2 + label_dist;
-                text_y = n.y;
+                text_x[0] = n.x + W/2 + label_dist;
+                text_y[0] = n.y;
+                text_x[1] = text_x[0];
+                text_y[1] = text_y[0] + font_size;
                 text_style = "vert";
             }
             else
@@ -112,17 +123,19 @@ void write_svg_component_node(FILE *f, const node &n)
                 rect_y = n.y - W/2;
                 rect_w = L;
                 rect_h = W;
-                text_x = n.x;
-                text_y = n.y - W/2 - label_dist;
+                text_x[0] = n.x;
+                text_y[0] = n.y - W/2 - label_dist;
+                text_x[1] = text_x[0];
+                text_y[1] = n.y + W/2 + font_size + label_dist;
                 text_style = "hori";
             }
 
             fprintf(f, "    <g>\n"
-                       "        <rect x=\"%d\" y=\"%d\" width=\"%d\" height=\"%d\" style=\"fill:#ffffff;stroke:#000000;stroke-width:1\" />\n"
-                       "        <text x=\"%d\" y=\"%d\" class=\"%s\">%s</text>\n"
-                       "    </g>\n",
-                       rect_x, rect_y, rect_w, rect_h,
-                       text_x, text_y, text_style, n.name);
+                       "        <rect x=\"%d\" y=\"%d\" width=\"%d\" height=\"%d\" style=\"fill:#ffffff;stroke:#000000;stroke-width:1\" />\n",
+                       rect_x, rect_y, rect_w, rect_h);
+            write_svg_text(f, text_x[0], text_y[0], text_style, n.name);
+            write_svg_text(f, text_x[1], text_y[1], text_style, n.val);
+            fprintf(f, "    </g>\n");
             break;
         }
         case component_type::V:
@@ -175,12 +188,11 @@ void write_svg_component_node(FILE *f, const node &n)
 
             fprintf(f, "    <g>\n"
                        "        <circle cx=\"%d\" cy=\"%d\" r=\"%d\" style=\"fill:#ffffff;stroke:#000000;stroke-width:1\" />\n"
-                       "        <line x1=\"%d\" y1=\"%d\" x2=\"%d\" y2=\"%d\" stroke=\"#000000\" stroke-width=\"1\" marker-end=\"url(#arrowhead)\" />\n"
-                       "        <text x=\"%d\" y=\"%d\" class=\"%s\">%s</text>\n"
-                       "    </g>\n",
+                       "        <line x1=\"%d\" y1=\"%d\" x2=\"%d\" y2=\"%d\" stroke=\"#000000\" stroke-width=\"1\" marker-end=\"url(#arrowhead)\" />\n",
                        cx, cy, R,
-                       lx1, ly1, lx2, ly2,
-                       text_x, text_y, text_style, n.name);
+                       lx1, ly1, lx2, ly2);
+            write_svg_text(f, text_x, text_y, text_style, n.name);
+            fprintf(f, "    </g>\n");
             break;
         }
         case component_type::L:
@@ -240,14 +252,13 @@ void write_svg_component_node(FILE *f, const node &n)
 
             fprintf(f, "    <g>\n"
                        "        <rect x=\"%d\" y=\"%d\" width=\"%d\" height=\"%d\" style=\"fill:#ffffff\" />\n"
-                       "        <path d=\"M %d,%d C %d,%d %d,%d %d,%d C %d,%d %d,%d %d,%d C %d,%d %d,%d %d,%d \" style=\"fill:#ffffff;stroke:#000000;stroke-width:1\" />\n"
-                       "        <text x=\"%d\" y=\"%d\" class=\"%s\">%s</text>\n"
-                       "    </g>\n",
+                       "        <path d=\"M %d,%d C %d,%d %d,%d %d,%d C %d,%d %d,%d %d,%d C %d,%d %d,%d %d,%d \" style=\"fill:#ffffff;stroke:#000000;stroke-width:1\" />\n",
                        x0, y0, width, height,
                        x[0], y[0], x[1], y[1], x[2], y[2], x[3], y[3],
                        x[1] + x_offset, y[1] + y_offset, x[2] + x_offset, y[2] + y_offset, x[3] + x_offset, y[3] + y_offset,
-                       x[1] + 2*x_offset, y[1] + 2*y_offset, x[2] + 2*x_offset, y[2] + 2*y_offset, x[3] + 2*x_offset, y[3] + 2*y_offset,
-                       text_x, text_y, text_style, n.name);
+                       x[1] + 2*x_offset, y[1] + 2*y_offset, x[2] + 2*x_offset, y[2] + 2*y_offset, x[3] + 2*x_offset, y[3] + 2*y_offset);
+            write_svg_text(f, text_x, text_y, text_style, n.name);
+            fprintf(f, "    </g>\n");
             break;
         }
         case component_type::C:
@@ -296,12 +307,11 @@ void write_svg_component_node(FILE *f, const node &n)
             fprintf(f, "    <g>\n"
                        "        <rect x=\"%d\" y=\"%d\" width=\"%d\" height=\"%d\" style=\"fill:#ffffff\" />\n"
                        "        <line x1=\"%d\" y1=\"%d\" x2=\"%d\" y2=\"%d\" stroke=\"#000000\" stroke-width=\"1\" />\n"
-                       "        <line x1=\"%d\" y1=\"%d\" x2=\"%d\" y2=\"%d\" stroke=\"#000000\" stroke-width=\"1\" />\n"
-                       "        <text x=\"%d\" y=\"%d\" class=\"%s\">%s</text>\n"
-                       "    </g>\n",
+                       "        <line x1=\"%d\" y1=\"%d\" x2=\"%d\" y2=\"%d\" stroke=\"#000000\" stroke-width=\"1\" />\n",
                        x1[0], y1[0], width, height,
-                       x1[0], y1[0], x2[0], y2[0], x1[1], y1[1], x2[1], y2[1],
-                       text_x, text_y, text_style, n.name);
+                       x1[0], y1[0], x2[0], y2[0], x1[1], y1[1], x2[1], y2[1]);
+            write_svg_text(f, text_x, text_y, text_style, n.name);
+            fprintf(f, "    </g>\n");
             break;
         }
         case component_type::I:
@@ -356,11 +366,10 @@ void write_svg_component_node(FILE *f, const node &n)
             fprintf(f, "    <g>\n"
                        "        <circle cx=\"%d\" cy=\"%d\" r=\"%d\" style=\"fill:#ffffff;stroke:#000000;stroke-width:1\" />\n"
                        "        <circle cx=\"%d\" cy=\"%d\" r=\"%d\" style=\"fill:#ffffff;stroke:#000000;stroke-width:1\" />\n"
-                       "        <line x1=\"%d\" y1=\"%d\" x2=\"%d\" y2=\"%d\" stroke=\"#000000\" stroke-width=\"1\" marker-end=\"url(#arrowhead)\" />\n"
-                       "        <text x=\"%d\" y=\"%d\" class=\"%s\">%s</text>\n"
-                       "    </g>\n",
-                       cx, cy, R_outer, cx, cy, R, lx1, ly1, lx2, ly2,
-                       text_x, text_y, text_style, n.name);
+                       "        <line x1=\"%d\" y1=\"%d\" x2=\"%d\" y2=\"%d\" stroke=\"#000000\" stroke-width=\"1\" marker-end=\"url(#arrowhead)\" />\n",
+                       cx, cy, R_outer, cx, cy, R, lx1, ly1, lx2, ly2);
+            write_svg_text(f, text_x, text_y, text_style, n.name);
+            fprintf(f, "    </g>\n");
             break;
         }
         default:

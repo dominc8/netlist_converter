@@ -78,6 +78,7 @@
     <g>
         <rect x="429" y="900" width="40" height="20" style="fill:#ffffff;stroke:#000000;stroke-width:1" />
         <text x="449" y="895" class="hori">R1</text>
+        <text x="449" y="941" class="hori">10k</text>
     </g>
     <g>
         <rect x="444" y="206" width="10" height="20" style="fill:#ffffff" />
