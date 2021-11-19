@@ -87,6 +87,12 @@ void begin_svg(FILE *f, const std::vector<node> &nodes)
                "        <polygon points=\"0 0, 4 4, 0 8\" />\n"
                "        </marker>\n"
                "    </defs>\n");
+
+    // force white background
+    fprintf(f, "    <g>\n"
+               "        <rect x=\"%d\" y=\"%d\" width=\"%d\" height=\"%d\" style=\"fill:#ffffff\" />\n"
+               "    </g>\n",
+               x0, y0, width, height);
 }
 
 void end_svg(FILE *f)

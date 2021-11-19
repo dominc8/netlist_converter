@@ -16,6 +16,9 @@
         </marker>
     </defs>
     <g>
+        <rect x="46" y="46" width="360" height="358" style="fill:#ffffff" />
+    </g>
+    <g>
         <g>
             <path fill="none" d="M 86 272 L 180 272" stroke="#000000" />
         </g>
