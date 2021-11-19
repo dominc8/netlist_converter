@@ -60,10 +60,11 @@
         </g>
     </g>
     <g>
-        <circle cx="366" cy="178" r="15" style="fill:#ffffff;stroke:#000000;stroke-width:1" />
+        <circle cx="366" cy="178" r="18" style="fill:#ffffff;stroke:#000000;stroke-width:1" />
+        <circle cx="366" cy="178" r="0" style="fill:#ffffff;stroke:#000000;stroke-width:1" />
         <line x1="374" y1="178" x2="358" y2="178" stroke="#000000" stroke-width="1" marker-end="url(#arrowhead)" />
-        <text x="366" y="158" class="hori">V1</text>
-        <text x="366" y="209" class="hori">1</text>
+        <text x="366" y="155" class="hori">V1</text>
+        <text x="366" y="212" class="hori">1</text>
     </g>
     <g>
         <path d="M 460,178 h 20 v 20" style="fill:#ffffff;stroke:#000000;stroke-width:1" />

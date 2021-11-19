@@ -48,10 +48,11 @@
         </g>
     </g>
     <g>
-        <circle cx="552" cy="133" r="15" style="fill:#ffffff;stroke:#000000;stroke-width:1" />
+        <circle cx="552" cy="133" r="18" style="fill:#ffffff;stroke:#000000;stroke-width:1" />
+        <circle cx="552" cy="133" r="0" style="fill:#ffffff;stroke:#000000;stroke-width:1" />
         <line x1="552" y1="141" x2="552" y2="125" stroke="#000000" stroke-width="1" marker-end="url(#arrowhead)" />
-        <text x="572" y="133" class="vert">V1</text>
-        <text x="572" y="149" class="vert">1</text>
+        <text x="575" y="133" class="vert">V1</text>
+        <text x="575" y="149" class="vert">1</text>
     </g>
     <g>
         <path d="M 552,180 h 20 v 20" style="fill:#ffffff;stroke:#000000;stroke-width:1" />
