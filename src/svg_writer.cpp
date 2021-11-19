@@ -1,16 +1,19 @@
 #include "logger.hpp"
 #include "svg_writer.hpp"
 #include "svg_node_writer.hpp"
+#include "svg_common.hpp"
 #include <stdio.h>
 #include <string>
+
+namespace svg
+{
 
 namespace
 {
 void begin_svg(FILE *f, const std::vector<node> &nodes);
 void end_svg(FILE *f);
 void write_svg_wires(FILE *f, const graph &g, const std::vector<node> &nodes);
-void write_svg_nodes(FILE *f, const std::vector<node> &nodes);
-void write_svg_true_dotpoints(FILE *f, const graph &g, const std::vector<node> &nodes);
+void write_svg_nodes(FILE *f, const graph &g, const std::vector<node> &nodes);
 }
 
 void write_layout_svg(const graph &g, const std::vector<node> &nodes, const char *filename)
@@ -26,8 +29,7 @@ void write_layout_svg(const graph &g, const std::vector<node> &nodes, const char
 
     begin_svg(f, nodes);
     write_svg_wires(f, g, nodes);
-    write_svg_nodes(f, nodes);
-    write_svg_true_dotpoints(f, g, nodes);
+    write_svg_nodes(f, g, nodes);
     end_svg(f);
 
     fclose(f);
@@ -35,7 +37,6 @@ void write_layout_svg(const graph &g, const std::vector<node> &nodes, const char
 
 namespace
 {
-constexpr int32_t font_size = 16;
 void write_svg_wire(FILE *f, const node &n1, const node &n2);
 
 void begin_svg(FILE *f, const std::vector<node> &nodes)
@@ -77,7 +78,7 @@ void begin_svg(FILE *f, const std::vector<node> &nodes)
             "        .hori { font-size: %d; fill: #000000; text-anchor: middle }\n"
             "    </style>\n",
             x0, y0, width, height,
-            font_size, font_size
+            svg::font_size, svg::font_size
            );
 
     // for drawing arrows in voltage sources
@@ -111,9 +112,6 @@ void write_svg_wires(FILE *f, const graph &g, const std::vector<node> &nodes)
 
 void write_svg_component_node(FILE *f, const node &n)
 {
-    constexpr int32_t label_dist = 5;
-    const char* text_style;
-
     switch(n.comp_type)
     {
         case component_type::R:
@@ -146,32 +144,53 @@ void write_svg_component_node(FILE *f, const node &n)
     }
 }
 
-void write_svg_nodes(FILE *f, const std::vector<node> &nodes)
-{
-    for (const auto &n : nodes)
-    {
-        if (static_cast<int32_t>(n.comp_type) < n_component_type)
-        {
-            write_svg_component_node(f, n);
-        }
-        else if (n.comp_type == component_type::Ground)
-        {
-            write_svg_ground(f, n);
-        }
-    }
-}
-
-void write_svg_true_dotpoints(FILE *f, const graph &g, const std::vector<node> &nodes)
+void write_svg_nodes(FILE *f, const graph &g, const std::vector<node> &nodes)
 {
     for (int32_t i = 0; i < g.n_node; ++i)
     {
         const auto &n = nodes[i];
-        if (n.comp_type == component_type::DotPoint)
+        switch(n.comp_type)
         {
-            if (g.count_neighbours(i) > 2)
+            case component_type::R:
             {
-                write_svg_dot(f, n);
+                write_svg_resistor(f, n);
+                break;
             }
+            case component_type::L:
+            {
+                write_svg_inductor(f, n);
+                break;
+            }
+            case component_type::C:
+            {
+                write_svg_capacitor(f, n);
+                break;
+            }
+            case component_type::V:
+            {
+                write_svg_voltage(f, n);
+                break;
+            }
+            case component_type::I:
+            {
+                write_svg_current(f, n);
+                break;
+            }
+            case component_type::Ground:
+            {
+                write_svg_ground(f, n);
+                break;
+            }
+            case component_type::DotPoint:
+            {
+                if (g.count_neighbours(i) > 2)
+                {
+                    write_svg_dot(f, n);
+                }
+                break;
+            }
+            default:
+                LOG_WARN("Type of node %s not yet implemented", n.name);
         }
     }
 }
@@ -182,6 +201,7 @@ void write_svg_wire(FILE *f, const node &n1, const node &n2)
                "            <path fill=\"none\" d=\"M %d %d L %d %d\" stroke=\"#000000\" />\n"
                "        </g>\n",
                n1.x, n1.y, n2.x, n2.y);
+}
 }
 
 }

@@ -38,7 +38,7 @@ int main(int argc, char **argv)
         return -1;
     }
     write_layout(f, g, nodes);
-    write_layout_svg(g, nodes, input_filename);
+    svg::write_layout_svg(g, nodes, input_filename);
     fclose(f);
 
     return 0;

@@ -1,10 +1,13 @@
 #include "logger.hpp"
 #include "svg_node_writer.hpp"
+#include "svg_common.hpp"
+
+namespace svg
+{
 
 namespace
 {
 constexpr int32_t label_dist = 5;
-constexpr int32_t font_size = 16; // move to common or sth
 
 enum class orientation
 {
@@ -73,7 +76,7 @@ void write_svg_capacitor(FILE *f, const node &n)
         view.x_name = n.x + W/2 + label_dist;
         view.y_name = n.y;
         view.x_val = view.x_name;
-        view.y_val = view.y_name + font_size;
+        view.y_val = view.y_name + svg::font_size;
     }
     else
     {
@@ -92,7 +95,7 @@ void write_svg_capacitor(FILE *f, const node &n)
         view.x_name = n.x;
         view.y_name = n.y - W/2 - label_dist;
         view.x_val = n.x;
-        view.y_val = n.y + W/2 + label_dist + font_size;
+        view.y_val = n.y + W/2 + label_dist + svg::font_size;
     }
     fprintf(f, "    <g>\n"
                "        <rect x=\"%d\" y=\"%d\" width=\"%d\" height=\"%d\" style=\"fill:#ffffff\" />\n"
@@ -119,7 +122,7 @@ void write_svg_resistor(FILE *f, const node &n)
         view.x_name = n.x + W/2 + label_dist;
         view.y_name = n.y;
         view.x_val = view.x_name;
-        view.y_val = view.y_name + font_size;
+        view.y_val = view.y_name + svg::font_size;
     }
     else
     {
@@ -130,7 +133,7 @@ void write_svg_resistor(FILE *f, const node &n)
         view.x_name = n.x;
         view.y_name = n.y - W/2 - label_dist;
         view.x_val = view.x_name;
-        view.y_val = n.y + W/2 + label_dist + font_size;
+        view.y_val = n.y + W/2 + label_dist + svg::font_size;
     }
 
     fprintf(f, "    <g>\n"
@@ -171,7 +174,7 @@ void write_svg_inductor(FILE *f, const node &n)
         view.x_name = n.x + L + label_dist;
         view.y_name = n.y;
         view.x_val = view.x_name;
-        view.y_val = view.y_name + font_size;
+        view.y_val = view.y_name + svg::font_size;
     }
     else
     {
@@ -194,7 +197,7 @@ void write_svg_inductor(FILE *f, const node &n)
         view.x_name = n.x;
         view.y_name = n.y - label_dist;
         view.x_val = view.x_name;
-        view.y_val = n.y + label_dist + font_size;
+        view.y_val = n.y + label_dist + svg::font_size;
     }
 
     fprintf(f, "    <g>\n"
@@ -310,7 +313,7 @@ void prepare_source_views(const node &n, node_label_view &label_view, svg_source
         label_view.x_name = cx + R + label_dist;
         label_view.y_name = cy;
         label_view.x_val = label_view.x_name;
-        label_view.y_val = cy + font_size;
+        label_view.y_val = cy + svg::font_size;
     }
     else
     {
@@ -321,8 +324,10 @@ void prepare_source_views(const node &n, node_label_view &label_view, svg_source
         label_view.x_name = cx;
         label_view.y_name = cy - R - label_dist;
         label_view.x_val = cx;
-        label_view.y_val = cy + R + font_size;
+        label_view.y_val = cy + R + svg::font_size;
     }
 }
+}
+
 }
 

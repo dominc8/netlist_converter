@@ -5,6 +5,8 @@
 #include "node.hpp"
 #include <stdio.h>
 
+namespace svg
+{
 void write_svg_capacitor(FILE *f, const node &n);
 void write_svg_resistor(FILE *f, const node &n);
 void write_svg_inductor(FILE *f, const node &n);
@@ -12,6 +14,7 @@ void write_svg_voltage(FILE *f, const node &n);
 void write_svg_current(FILE *f, const node &n);
 void write_svg_ground(FILE *f, const node &n);
 void write_svg_dot(FILE *f, const node &n);
+}
 
 #endif /* SVG_NODE_WRITER_HPP */
 
