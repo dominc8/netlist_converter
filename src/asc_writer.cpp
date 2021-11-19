@@ -4,6 +4,7 @@
 
 namespace
 {
+constexpr int32_t scale = 3;
 const char* const symbol_map[n_component_type] = 
 {
     "voltage",
@@ -22,8 +23,8 @@ void write_header(FILE *f)
 
 void write_node_symbol(FILE *f, const node &n)
 {
-    int32_t x = n.x;
-    int32_t y = n.y;
+    int32_t x = scale * n.x;
+    int32_t y = scale * n.y;
 
     if (!rotation_matters(n.comp_type))
     {
@@ -39,7 +40,7 @@ void write_node_symbol(FILE *f, const node &n)
 
 void write_gnd_node(FILE *f, const node &n)
 {
-    fprintf(f, "FLAG %d %d 0\n", n.x, n.y);
+    fprintf(f, "FLAG %d %d 0\n", scale * n.x, scale * n.y);
 }
 
 void write_wire(FILE *f, const node &n1, const node &n2)
@@ -83,8 +84,8 @@ void write_wire(FILE *f, const node &n1, const node &n2)
     offset_y[1] *= mul[1];
     LOG_INFO("Offsetting wire from %s by (%d, %d) to %s by (%d, %d)", n1.name, offset_x[0], offset_y[0],
                                                                       n2.name, offset_x[1], offset_y[1]);
-    fprintf(f, "WIRE %d %d %d %d\n", n1.x + offset_x[0], n1.y + offset_y[0],
-                                     n2.x + offset_x[1], n2.y + offset_y[1]);
+    fprintf(f, "WIRE %d %d %d %d\n", scale * n1.x + offset_x[0], scale * n1.y + offset_y[0],
+                                     scale * n2.x + offset_x[1], scale * n2.y + offset_y[1]);
 }
 
 void write_layout(FILE *f, const graph &g, const std::vector<node> &nodes)
