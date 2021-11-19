@@ -12,9 +12,9 @@ enum class orientation
     horizontal
 };
 
-struct node_text_view
+struct node_label_view
 {
-    node_text_view(const node &n):
+    node_label_view(const node &n):
         name{&n.name[0]}, val{&n.val[0]}
     {
         if ((n.rotation == 0) || (n.rotation == 180))
@@ -36,22 +36,24 @@ struct node_text_view
     orientation orient;
 };
 
-void write_svg_labels(FILE *f, const node_text_view &view)
+struct svg_source_view
 {
-    const char *style = (view.orient == orientation::vertical) ? "vert" : "hori";
-    fprintf(f, "        <text x=\"%d\" y=\"%d\" class=\"%s\">%s</text>\n"
-               "        <text x=\"%d\" y=\"%d\" class=\"%s\">%s</text>\n",
-               view.x_name, view.y_name, style, view.name,
-               view.x_val, view.y_val, style, view.val);
-}
+    int32_t radius[2];
+    int32_t c_x;
+    int32_t c_y;
+    int32_t line_x[2];
+    int32_t line_y[2];
+};
 
+void write_svg_labels(FILE *f, const node_label_view &view);
+void write_svg_source(FILE *f, const node &n);
 }
 
 void write_svg_capacitor(FILE *f, const node &n)
 {
     constexpr int32_t W = 20;
     constexpr int32_t L = 10;
-    node_text_view view(n);
+    node_label_view view(n);
     int32_t x1[2], x2[2], y1[2], y2[2];
     int32_t width, height;
     if (n.rotation == 0)
@@ -106,7 +108,7 @@ void write_svg_resistor(FILE *f, const node &n)
 {
     constexpr int32_t W = 20;
     constexpr int32_t L = 40;
-    node_text_view view(n);
+    node_label_view view(n);
     int32_t rect_x, rect_y, rect_w, rect_h;
     if (n.rotation == 0)
     {
@@ -143,7 +145,7 @@ void write_svg_inductor(FILE *f, const node &n)
     constexpr int32_t n_arc = 3;
     constexpr int32_t W = 12; // single arc width
     constexpr int32_t L = 8; // arc amplitude
-    node_text_view view(n);
+    node_label_view view(n);
     int32_t x[4], y[4];
     int32_t x_offset, y_offset;
     int32_t x0, y0, width, height;
@@ -206,85 +208,6 @@ void write_svg_inductor(FILE *f, const node &n)
     fprintf(f, "    </g>\n");
 }
 
-namespace
-{
-struct svg_source_view
-{
-    int32_t radius[2];
-    int32_t c_x;
-    int32_t c_y;
-    int32_t line_x[2];
-    int32_t line_y[2];
-};
-
-void prepare_source_views(const node &n, node_text_view &text_view, svg_source_view &source_view)
-{
-    constexpr int32_t R = 18;
-    constexpr int32_t R_inner = 15; // For current source
-    constexpr int32_t A = 8; // arrow length, indirectly depends on arrow params defined in svg header
-
-    source_view.radius[0] = R;
-    source_view.radius[1] = R_inner;
-
-    int32_t cx = n.x, cy = n.y;
-
-    source_view.c_x = cx;
-    source_view.c_y = cy;
-    int32_t lx1, lx2, ly1, ly2;
-
-    int32_t arrow = A;
-    if ((n.rotation == 90) || (n.rotation == 180))
-    {
-        arrow = -arrow;
-    }
-    if (n.comp_type == component_type::V)
-    {
-        arrow = -arrow;
-        source_view.radius[1] = 0;
-    }
-
-    if ((n.rotation == 0) || (n.rotation == 180))
-    {
-        source_view.line_x[0] = cx;
-        source_view.line_x[1] = cx;
-        source_view.line_y[0] = cy - arrow;
-        source_view.line_y[1] = cy + arrow;
-        text_view.x_name = cx + R + label_dist;
-        text_view.y_name = cy;
-        text_view.x_val = text_view.x_name;
-        text_view.y_val = cy + font_size;
-    }
-    else
-    {
-        source_view.line_x[0] = cx - arrow;
-        source_view.line_x[1] = cx + arrow;
-        source_view.line_y[0] = cy;
-        source_view.line_y[1] = cy;
-        text_view.x_name = cx;
-        text_view.y_name = cy - R - label_dist;
-        text_view.x_val = cx;
-        text_view.y_val = cy + R + font_size;
-    }
-}
-
-void write_svg_source(FILE *f, const node &n)
-{
-    svg_source_view source_view;
-    node_text_view text_view(n);
-
-    prepare_source_views(n, text_view, source_view);
-    fprintf(f, "    <g>\n"
-               "        <circle cx=\"%d\" cy=\"%d\" r=\"%d\" style=\"fill:#ffffff;stroke:#000000;stroke-width:1\" />\n"
-               "        <circle cx=\"%d\" cy=\"%d\" r=\"%d\" style=\"fill:#ffffff;stroke:#000000;stroke-width:1\" />\n"
-               "        <line x1=\"%d\" y1=\"%d\" x2=\"%d\" y2=\"%d\" stroke=\"#000000\" stroke-width=\"1\" marker-end=\"url(#arrowhead)\" />\n",
-               source_view.c_x, source_view.c_y, source_view.radius[0],
-               source_view.c_x, source_view.c_y, source_view.radius[1],
-               source_view.line_x[0], source_view.line_y[0], source_view.line_x[1], source_view.line_y[1]);
-    write_svg_labels(f, text_view);
-    fprintf(f, "    </g>\n");
-}
-}
-
 void write_svg_voltage(FILE *f, const node &n)
 {
     write_svg_source(f, n);
@@ -320,5 +243,86 @@ void write_svg_ground(FILE *f, const node &n)
                -W/2, -L,
                W/2);
     write_svg_dot(f, n);
+}
+
+namespace
+{
+void prepare_source_views(const node &n, node_label_view &label_view, svg_source_view &source_view);
+
+void write_svg_labels(FILE *f, const node_label_view &view)
+{
+    const char *style = (view.orient == orientation::vertical) ? "vert" : "hori";
+    fprintf(f, "        <text x=\"%d\" y=\"%d\" class=\"%s\">%s</text>\n"
+               "        <text x=\"%d\" y=\"%d\" class=\"%s\">%s</text>\n",
+               view.x_name, view.y_name, style, view.name,
+               view.x_val, view.y_val, style, view.val);
+}
+
+void write_svg_source(FILE *f, const node &n)
+{
+    svg_source_view source_view;
+    node_label_view label_view(n);
+
+    prepare_source_views(n, label_view, source_view);
+    fprintf(f, "    <g>\n"
+               "        <circle cx=\"%d\" cy=\"%d\" r=\"%d\" style=\"fill:#ffffff;stroke:#000000;stroke-width:1\" />\n"
+               "        <circle cx=\"%d\" cy=\"%d\" r=\"%d\" style=\"fill:#ffffff;stroke:#000000;stroke-width:1\" />\n"
+               "        <line x1=\"%d\" y1=\"%d\" x2=\"%d\" y2=\"%d\" stroke=\"#000000\" stroke-width=\"1\" marker-end=\"url(#arrowhead)\" />\n",
+               source_view.c_x, source_view.c_y, source_view.radius[0],
+               source_view.c_x, source_view.c_y, source_view.radius[1],
+               source_view.line_x[0], source_view.line_y[0], source_view.line_x[1], source_view.line_y[1]);
+    write_svg_labels(f, label_view);
+    fprintf(f, "    </g>\n");
+}
+
+void prepare_source_views(const node &n, node_label_view &label_view, svg_source_view &source_view)
+{
+    constexpr int32_t R = 18;
+    constexpr int32_t R_inner = 15; // For current source
+    constexpr int32_t A = 8; // arrow length, indirectly depends on arrow params defined in svg header
+
+    source_view.radius[0] = R;
+    source_view.radius[1] = R_inner;
+
+    int32_t cx = n.x, cy = n.y;
+
+    source_view.c_x = cx;
+    source_view.c_y = cy;
+    int32_t lx1, lx2, ly1, ly2;
+
+    int32_t arrow = A;
+    if ((n.rotation == 90) || (n.rotation == 180))
+    {
+        arrow = -arrow;
+    }
+    if (n.comp_type == component_type::V)
+    {
+        arrow = -arrow;
+        source_view.radius[1] = 0;
+    }
+
+    if ((n.rotation == 0) || (n.rotation == 180))
+    {
+        source_view.line_x[0] = cx;
+        source_view.line_x[1] = cx;
+        source_view.line_y[0] = cy - arrow;
+        source_view.line_y[1] = cy + arrow;
+        label_view.x_name = cx + R + label_dist;
+        label_view.y_name = cy;
+        label_view.x_val = label_view.x_name;
+        label_view.y_val = cy + font_size;
+    }
+    else
+    {
+        source_view.line_x[0] = cx - arrow;
+        source_view.line_x[1] = cx + arrow;
+        source_view.line_y[0] = cy;
+        source_view.line_y[1] = cy;
+        label_view.x_name = cx;
+        label_view.y_name = cy - R - label_dist;
+        label_view.x_val = cx;
+        label_view.y_val = cy + R + font_size;
+    }
+}
 }
 
