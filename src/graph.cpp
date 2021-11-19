@@ -30,3 +30,15 @@ uint8_t graph::edge_of(int32_t p0, int32_t p1) const
     return matrix[p0 * n_all_node + p1];
 }
 
+int32_t graph::count_neighbours(int32_t idx) const
+{
+    int32_t n_neighbours = 0;
+    uint8_t *edges = &matrix[idx * n_all_node];
+    for (int32_t i = 0; i < n_node; ++i)
+    {
+        if (edges[i])
+            ++n_neighbours;
+    }
+    return n_neighbours;
+}
+

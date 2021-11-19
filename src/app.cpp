@@ -2,6 +2,7 @@
 #include "layoutizer.hpp"
 #include "logger.hpp"
 #include "net_parser.hpp"
+#include "svg_writer.hpp"
 
 int main(int argc, char **argv)
 {
@@ -37,6 +38,7 @@ int main(int argc, char **argv)
         return -1;
     }
     write_layout(f, g, nodes);
+    svg::write_layout_svg(g, nodes, input_filename);
     fclose(f);
 
     return 0;
