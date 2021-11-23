@@ -22,9 +22,23 @@ TEST_F(net_parser_tests, parse_whitespace_line)
     EXPECT_EQ(ret, false);
 }
 
-TEST_F(net_parser_tests, parse_wrong_line)
+TEST_F(net_parser_tests, parse_line_short_name_unknown_type)
 {
     char line[] = "11 0 1 2";
+    bool ret = parse_line(&line[0], &view);
+    EXPECT_EQ(ret, false);
+}
+
+TEST_F(net_parser_tests, parse_line_long_name_unknown_type)
+{
+    char line[] = "123123123123 0 1 2";
+    bool ret = parse_line(&line[0], &view);
+    EXPECT_EQ(ret, false);
+}
+
+TEST_F(net_parser_tests, parse_line_long_name_known_type)
+{
+    char line[] = "V23123123123 0 1 2";
     bool ret = parse_line(&line[0], &view);
     EXPECT_EQ(ret, false);
 }

@@ -30,10 +30,10 @@ struct node_label_view
         }
     }
 
-    int32_t x_name;
-    int32_t y_name;
-    int32_t x_val;
-    int32_t y_val;
+    int32_t x_name{};
+    int32_t y_name{};
+    int32_t x_val{};
+    int32_t y_val{};
     const char *name;
     const char *val;
     orientation orient;

@@ -60,7 +60,7 @@ bool parse_line(char *line, line_view *view)
     bool result;
 
     result = parse_str(token, &view->name[0], sizeof(view->name));
-    result = parse_type(token, &view->comp_type);
+    result = result && parse_type(token, &view->comp_type);
     token = strtok(nullptr, &delimiters[0]);
 
     if ((nullptr == token) || !result)
