@@ -13,7 +13,7 @@ include(FetchContent)
 FetchContent_Declare(
     ogdf
     GIT_REPOSITORY https://github.com/ogdf/ogdf.git
-    GIT_TAG catalpa-202002
+    GIT_TAG foxglove-202510
 )
 FetchContent_MakeAvailable(ogdf)
 
@@ -47,7 +47,7 @@ add_subdirectory(ut)
 FetchContent_Declare(
     googletest
     GIT_REPOSITORY https://github.com/google/googletest.git
-    GIT_TAG release-1.11.0
+    GIT_TAG v1.17.0
 )
 FetchContent_MakeAvailable(googletest)
 include(GoogleTest)
